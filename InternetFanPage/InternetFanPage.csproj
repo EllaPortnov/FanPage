@@ -275,11 +275,14 @@
     <Content Include="Content\images\videoPhoto.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\OFL.txt" />
     <Content Include="Global.asax" />
     <Content Include="css\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\Amatir.ttf" />
+    <Content Include="fonts\DancingScript-Bold.ttf" />
+    <Content Include="fonts\DancingScript.ttf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
