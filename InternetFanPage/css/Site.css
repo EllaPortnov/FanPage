@@ -1,12 +1,16 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+
+    
+
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -18,7 +22,7 @@ textarea {
 
 @font-face {
     font-family: myFont;
-    src: url(../fonts/Amatir.ttf);
+    src: url(../fonts/DancingScript.ttf);
 }
 
 .fixedPart {
@@ -26,12 +30,14 @@ textarea {
     top: 0;
     padding-top: 10px;
     width: 100%;
-    background-color: white;
+    height: 155px;
+    background-color: #fbe2f0;
 
 }
 
 .body-content {
     padding-top: 200px;
+
     
 }
 .homeTitle {
@@ -56,6 +62,10 @@ video{
 .loginBtn {
 
     left: 350%;
+}
+
+.myNav {
+    color: beige;
 }
 
 .Stories {
