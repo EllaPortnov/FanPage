@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InternetFanPage.Migrations
 {
-    [DbContext(typeof(PageContext))]
+    [DbContext(typeof(FanPageContext))]
     [Migration("20190425194606_InitialCreate")]
     partial class InitialCreate
     {

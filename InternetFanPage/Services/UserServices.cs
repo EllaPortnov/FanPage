@@ -5,16 +5,46 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Http.Results;
 
 namespace InternetFanPage.Services
 {
     public class UserServices
     {
+
+        public LoginResult AttemptLogin(LoginDetails input)
+        {
+            if (input == null)
+                return LoginResult.Failed;
+
+            using (var context = new FanPageContext())
+            {
+                var userDetails = context.Users.Where(p => p.Username == input.Username).FirstOrDefault();
+
+                if (userDetails == null)
+                    return LoginResult.Failed;
+
+                var encryptedPassword = convertToMd5(input.Password);
+                var token = convertToMd5(DateTime.Now.ToString());
+
+                if (!encryptedPassword.Equals(userDetails.Password))
+                    return LoginResult.Failed;
+
+                return new LoginResult()
+                {
+                    LoginSucceeded = true,
+                    Token = token
+                };
+            }
+        }
+
+
+
         public bool Register(RegisterDetails UserInput)
         {
             if (UserInput is null)
                 return false;
-            using (var Context = new PageContext())
+            using (var Context = new FanPageContext())
             {
                 User newUser = new User()
                 {
@@ -52,7 +82,7 @@ namespace InternetFanPage.Services
 
         public User GetUser(string userName)
         {
-            using (var context = new PageContext())
+            using (var context = new FanPageContext())
             {
                 return context.Users.FirstOrDefault(u => u.Username == userName);
             }
@@ -60,7 +90,7 @@ namespace InternetFanPage.Services
 
         public bool DoesUserExists(string username)
         {
-            using (var context = new PageContext())
+            using (var context = new FanPageContext())
             {
                 return context.Users.Count(u => u.Username == username) > 0;
             }
