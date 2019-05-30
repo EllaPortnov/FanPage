@@ -17,10 +17,11 @@ namespace InternetFanPage.Controllers
             if (result.LoginSucceeded)
             {
                 User user = userService.GetUser(details.Username);
-               // HttpContext.Session.Set("User", Encoding.ASCII.GetBytes(user.FirstName));
-               //HttpContext.Session.Set("IsAdmin", BitConverter.GetBytes(user.IsAdmin == 1));
+                Session["User"] = Encoding.ASCII.GetBytes(user.FirstName);
+                Session["IsAdmin"] = BitConverter.GetBytes(user.IsAdmin == 1);
+
             }
-            return View();
+            return Json(result);
         }
 
 

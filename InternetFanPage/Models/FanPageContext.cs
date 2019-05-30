@@ -27,7 +27,7 @@ namespace InternetFanPage.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite("Filename=./fanpageDB.db");
+                optionsBuilder.UseSqlite("Filename=./PageDB.db");
             }
         }
     }
