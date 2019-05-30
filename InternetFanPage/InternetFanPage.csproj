@@ -249,7 +249,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -260,7 +260,9 @@
     <Compile Include="Migrations\PageContextModelSnapshot.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Concert.cs" />
-    <Compile Include="Models\PageContext.cs" />
+    <Compile Include="Models\FanPageContext.cs" />
+    <Compile Include="Models\LoginDetails.cs" />
+    <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\RegisterDetails.cs" />
     <Compile Include="Models\User.cs" />
@@ -283,6 +285,7 @@
     <Content Include="fonts\Amatir.ttf" />
     <Content Include="fonts\DancingScript-Bold.ttf" />
     <Content Include="fonts\DancingScript.ttf" />
+    <Content Include="App_Data\PageDB.db" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -310,7 +313,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="video\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
