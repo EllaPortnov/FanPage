@@ -24,11 +24,21 @@ namespace InternetFanPage.Controllers
             return Json(result);
         }
 
-
         public ActionResult Register(RegisterDetails details)
         {
-            return View();
+            if (userService.Register(details))
+                return Json(true);
+
+            return Json(false);
         }
+
+        public ActionResult CheckName(string username)
+        {
+            bool a = userService.DoesUserExists(username);
+            return Json(a, JsonRequestBehavior.AllowGet);
+
+        }
+
         // GET: User
         public ActionResult Index()
         {
