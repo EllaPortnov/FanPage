@@ -17,7 +17,7 @@ namespace InternetFanPage.Controllers
             if (result.LoginSucceeded)
             {
                 User user = userService.GetUser(details.Username);
-                Session["User"] = Encoding.ASCII.GetBytes(user.FirstName);
+                Session["User"] = (user.FirstName);
                 Session["IsAdmin"] = BitConverter.GetBytes(user.IsAdmin == 1);
 
             }
@@ -37,6 +37,14 @@ namespace InternetFanPage.Controllers
             bool a = userService.DoesUserExists(username);
             return Json(a, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Remove("User");
+            HttpContext.Session.Remove("IsAdmin");
+
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         // GET: User

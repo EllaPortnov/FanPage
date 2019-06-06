@@ -18,10 +18,21 @@
             <div class="home-Title col-sm-10">
                 Ariana Grande
             </div>
-            <div class="col-sm-2 login">
-                <a href="#" id="loginBtn" class="loginBtn">Login/Register</a>
 
-            </div>
+
+            @if (Session["User"] == null)
+            {
+
+                <div class="col-sm-2 login">
+                    <a href="#" id="loginBtn" class="loginBtn">Login/Register</a>
+                </div>
+            }
+            else
+            {
+                <h1 class="hello-Title">Hello @Session["User"]</h1>
+                <a href="#" id="logoutBtn">Log Out</a>
+
+            }
         </div>
         <div class="navbar navbar-inverse">
             <div class="container">
@@ -80,7 +91,7 @@
                     <input type="submit" name="register" id="registerSubmitBtn" class="login loginmodal-submit" value="Register">
                 </form>
 
-            
+
             </div>
         </div>
     </div>
@@ -114,7 +125,7 @@
             $("#registerBtn").click(function (e) {
                 $('#loginModal').modal('hide');
                 $('#registerModal').modal();
-                
+
                 e.preventDefault();
             })
 
@@ -195,7 +206,16 @@
                 return isValid;
             }
 
-
+            $('#logoutBtn').click(function (e) {
+                $.ajax('/Users/Logout')
+                    .done(function (result) {
+                        location.reload()
+                    })
+                    .fail(function () {
+                        console.log("logout failed");
+                    })
+                e.preventDefault();
+            })
         });
     </script>
     @RenderSection("Scripts", required: false)
