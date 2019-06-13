@@ -1,0 +1,156 @@
+﻿@model IEnumerable<InternetFanPage.Models.Concert>
+
+@{
+    ViewBag.Title = "Concerts";
+}
+
+<h2>Upconig Concerts</h2>
+<link rel="stylesheet" href="~/css/concerts.css" />
+
+<div class="row">
+    <div class="col-sm-3">
+        <ul class="list-group">
+            <li type="button" class="list-group-item concert-list-title">
+                City Name
+            </li>
+            @foreach (var item in Model)
+            {
+                <li type="button" class="list-group-item concert-list-item" id="@item.ConcertID">
+                    @item.City
+                </li>
+            }
+        </ul>
+
+        <ul class="list-group" id="concert-details" style="display:none;">
+            <li type="button" class="list-group-item current-concert" id="cb">
+                <div class="cb-card-title">
+                    <svg id="cb-x-card" class="cb-x-card">
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                    </svg>
+                    <h4 id="cbCity"></h4>
+                </div>
+                <div id="cbAddress"></div>
+                <div id="cbDate"></div>
+                <div id="cbPrice"></div>
+
+
+
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-9">
+        <div id='printoutPanel'></div>
+        <div id='myMap' style='position:relative;width:100%;height:500px;'></div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type='text/javascript'>
+    function weather(lat, lon) {
+        var api_url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
+            lat + '&lon=' +
+            lon + '&units=metric&appid=42f325f217132a2fa4b282b44d4a873e';
+
+        $.ajax({
+            url: api_url,
+            method: 'GET',
+            success: function (data) {
+
+                var tempr = data.main.temp;
+                var icon = data.weather[0].icon;
+
+                $('#cbForcast').text(tempr + '°');
+                $('#cbForcast').append('<img src=http://openweathermap.org/img/w/' + icon + '.png>');
+            }
+        });
+    }
+
+    // When the user select concert:
+    // 1. zooms in
+    // 2. show the card with the current concert details
+    // 3. mark the currect concert list item
+    function concertSelected(args, concertListItem) {
+        var pushpin;
+        if (concertListItem === undefined) {
+            pushpin = args.target;
+            concertListItem = $("#" + pushpin.metadata.concertID);
+        } else {
+            pushpin = map.entities.get(concertListItem[0].id-2);
+        }
+
+        $("li.concert-list-item").css('background-color', 'white');
+        $(concertListItem).css('background-color', '#f2f2f2');
+        $("#concert-details").css('display', 'inherit');
+
+        map.setView({ center: pushpin.getLocation(), zoom: 15 });
+        $("#cbCity").text(pushpin.metadata.City);
+        $("#cbAddress").text(pushpin.metadata.Address);
+        $("#cbDate").text(pushpin.metadata.Date);
+        $("#cbPrice").text("Price:" +   pushpin.metadata.Price + " NIS");
+
+        weather(pushpin.getLocation().latitude, pushpin.getLocation().longitude);
+    }
+
+
+
+
+
+   
+    // When the user closes the card the map zooms out
+    // unmark the currect concert list item
+    function infoboxClosed() {
+        if (!infobox.getVisible()) {
+            $("li.concert-list-item").css('background-color', 'white');
+            map.setView({
+                center: new Microsoft.Maps.Location(31.96482358762261, 34.99964556250001),
+                zoom: 8
+            });
+        }
+    }
+
+    function loadMapScenario() {
+        map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            // Map settings when loading. Map center set to Sgula, Israel.
+            credentials: 'Aoe9qNuzrXqzV9N97QUrO_TDmXB1mKLe9cSAsj6MhBvWV5GfJwFnmzs1KxxbG-BG',
+            center: new Microsoft.Maps.Location(31.96482358762261, 34.99964556250001),
+            zoom: 8
+        });
+
+        // Push pin for every concert
+        // Get the concerts list from the srver side and convert to JSON array
+        var base64Image = 'data:image/png;base64,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';
+        var location;
+        var pushpin;
+
+
+        var concerts = @Html.Raw(Json.Encode(Model));
+
+
+        for (var i = 0; i < concerts.length; i++) {
+            location = new Microsoft.Maps.Location(concerts[i].Latitude, concerts[i].Longitude);
+            pushpin = new Microsoft.Maps.Pushpin(location, { icon: base64Image });
+            pushpin.metadata = concerts[i];
+            map.entities.push(pushpin);
+            Microsoft.Maps.Events.addHandler(pushpin, 'click', (args) => { concertSelected(args); });
+        }
+    }
+
+    // Handel list iten click
+    $(".concert-list-item").click(function () {
+        concertSelected(null, $(this));
+    });
+
+
+    $("#cb-x-card").click(function () {
+        $("#concert-details").css('disp lay', 'none');
+        $("li.concert-list-item").css('background-color', 'white');
+        map.setView({
+            center: new Microsoft.Maps.Location(31.96482358762261, 34.99964556250001),
+            zoom: 8
+        });
+    });
+
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario' async defer></script>
