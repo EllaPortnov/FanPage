@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InternetFanPage.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,8 @@ namespace InternetFanPage.Controllers
 {
     public class HomeController : Controller
     {
+        private FanPageContext ct = new FanPageContext();
+
         public ActionResult Index()
         {
             return View();
@@ -26,5 +29,13 @@ namespace InternetFanPage.Controllers
 
             return View();
         }
+
+
+        public ActionResult Concerts()
+        {
+            return View(ct.Concerts.AsEnumerable());
+        }
+
+        
     }
 }

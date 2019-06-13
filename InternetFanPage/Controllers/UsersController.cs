@@ -2,7 +2,6 @@
 using System.Text;
 using InternetFanPage.Models;
 using InternetFanPage.Services;
-//using Microsoft.AspNetCore.Mvc;
 using System.Web.Mvc;
 
 namespace InternetFanPage.Controllers
