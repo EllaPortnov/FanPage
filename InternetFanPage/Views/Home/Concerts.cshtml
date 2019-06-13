@@ -30,9 +30,9 @@
                     </svg>
                     <h4 id="cbCity"></h4>
                 </div>
-                <p id="cbAddress"></p>
-                <p id="cbDate"></p>
-                Price:<p id="cbPrice"></p>
+                <div id="cbAddress"></div>
+                <div id="cbDate"></div>
+                <div id="cbPrice"></div>
 
 
 
@@ -88,7 +88,7 @@
         $("#cbCity").text(pushpin.metadata.City);
         $("#cbAddress").text(pushpin.metadata.Address);
         $("#cbDate").text(pushpin.metadata.Date);
-        $("#cbPrice").text(pushpin.metadata.Price);
+        $("#cbPrice").text("Price:" +   pushpin.metadata.Price + " NIS");
 
         weather(pushpin.getLocation().latitude, pushpin.getLocation().longitude);
     }
