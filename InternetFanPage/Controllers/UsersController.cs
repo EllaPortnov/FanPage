@@ -17,7 +17,7 @@ namespace InternetFanPage.Controllers
             {
                 User user = userService.GetUser(details.Username);
                 Session["User"] = (user.FirstName);
-                Session["IsAdmin"] = BitConverter.GetBytes(user.IsAdmin == 1);
+                Session["IsAdmin"] = (user.IsAdmin == 1);
 
             }
             return Json(result);

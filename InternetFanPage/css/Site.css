@@ -31,8 +31,7 @@ textarea {
 
 .web-title {
     display: flex;
-    justify-content: flex-start;
-}
+    justify-content: flex-start;}
 
 #logoutBtn {
     margin:20px;
@@ -51,8 +50,13 @@ textarea {
     font-family: myFont;
     font-size: 100px;
     text-align: center;
+    transition: font-size 2s;
+
 }
 
+    .home-Title:hover {
+        font-size: 110px;
+    }
 
 .hello-Title {
     font-family: myFont;
@@ -77,15 +81,13 @@ video {
 
 .Stories {
     font-size: 20px;
-}
-
-.about {
     border: solid;
     padding: 10px;
     border-color: black;
     border-radius: 4px;
-}
+    column-count: 3;
 
+}
 
 /****** LOGIN MODAL ******/
 .loginmodal-container {
