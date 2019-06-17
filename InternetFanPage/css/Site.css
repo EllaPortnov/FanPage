@@ -81,15 +81,13 @@ video {
 
 .Stories {
     font-size: 20px;
-}
-
-.about {
     border: solid;
     padding: 10px;
     border-color: black;
     border-radius: 4px;
-}
+    column-count: 3;
 
+}
 
 /****** LOGIN MODAL ******/
 .loginmodal-container {
