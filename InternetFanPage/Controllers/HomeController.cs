@@ -36,6 +36,10 @@ namespace InternetFanPage.Controllers
             return View(ct.Concerts.AsEnumerable());
         }
 
-        
+        public ActionResult Manager()
+        {
+            return View();
+        }
+
     }
 }
