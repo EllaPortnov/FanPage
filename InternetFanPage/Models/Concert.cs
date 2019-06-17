@@ -14,7 +14,7 @@ namespace InternetFanPage.Models
 
         public string City { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public double Latitude { get; set; }
 
