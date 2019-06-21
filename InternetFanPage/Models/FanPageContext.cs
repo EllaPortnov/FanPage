@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 
 namespace InternetFanPage.Models
@@ -20,7 +16,7 @@ namespace InternetFanPage.Models
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Concert> Concerts { get; set; }
-
+        public DbSet<Inventory> Inventory { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
 

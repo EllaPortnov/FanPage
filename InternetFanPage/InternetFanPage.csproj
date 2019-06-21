@@ -249,6 +249,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -259,14 +260,20 @@
     </Compile>
     <Compile Include="Migrations\PageContextModelSnapshot.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CategoryResult.cs" />
     <Compile Include="Models\Concert.cs" />
     <Compile Include="Models\FanPageContext.cs" />
+    <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\LoginDetails.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductResult.cs" />
+    <Compile Include="Models\ProductsPageModel.cs" />
+    <Compile Include="Models\ProductStockResult.cs" />
     <Compile Include="Models\RegisterDetails.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ShopService.cs" />
     <Compile Include="Services\UserServices.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +283,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\videoPhoto.png" />
     <Content Include="css\concerts.css" />
+    <Content Include="css\sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\OFL.txt" />
@@ -314,9 +322,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Concerts.cshtml" />
     <Content Include="Views\Home\Manager.cshtml" />
+    <Content Include="Views\Home\Shop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="video\" />
+    <Folder Include="Views\Shop\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
