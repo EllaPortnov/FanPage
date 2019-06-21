@@ -11,7 +11,6 @@ namespace InternetFanPage.Controllers
         ShopService shopService = new ShopService();
         ProductsPageModel model = new ProductsPageModel();
 
-
         public ActionResult Index()
         {
             return View();
@@ -32,7 +31,7 @@ namespace InternetFanPage.Controllers
             return View();
         }
 
-        public ActionResult Products(string searchTerm, int categoryId)
+        public ActionResult Products(string searchTerm, int categoryId = 1)
         {
            // LoadUserData();
 

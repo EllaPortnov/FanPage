@@ -277,6 +277,17 @@
     <Compile Include="Services\UserServices.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\Bag1.png" />
+    <Content Include="assets\bag2.png" />
+    <Content Include="assets\bag3.png" />
+    <Content Include="assets\cups.png" />
+    <Content Include="assets\hat.png" />
+    <Content Include="assets\notebook.png" />
+    <Content Include="assets\Shirt.png" />
+    <Content Include="assets\Shirt2.png" />
+    <Content Include="assets\shirt3.png" />
+    <Content Include="assets\shirt4.png" />
+    <Content Include="assets\shirt5.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -322,7 +333,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Concerts.cshtml" />
     <Content Include="Views\Home\Manager.cshtml" />
-    <Content Include="Views\Home\Shop.cshtml" />
+    <Content Include="Views\Home\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="video\" />

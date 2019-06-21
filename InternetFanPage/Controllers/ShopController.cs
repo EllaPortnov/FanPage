@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using InternetFanPage.Services;
+using InternetFanPage.Models;
 
 namespace InternetFanPage.Controllers
 {
@@ -7,43 +8,43 @@ namespace InternetFanPage.Controllers
     {
         ShopService shopService = new ShopService();
 
-    //    public IActionResult GetAllProducts()
-    //    {
-    //        return new JsonResult(shopService.GetAllProductsFromInventory());
-    //    }
+        public ActionResult GetAllProducts()
+        {
+            return Json(shopService.GetAllProductsFromInventory());
+        }
 
-    //    public IActionResult GetAllCategories()
-    //    {
-    //        return new JsonResult(shopService.GetAllCategories());
-    //    }
+        public ActionResult GetAllCategories()
+        {
+            return Json(shopService.GetAllCategories());
+        }
 
-    //    public IActionResult SearchProducts(string term)
-    //    {
-    //        return View(shopService.SearchProducts(term));
-    //    }
+        public ActionResult SearchProducts(string term)
+        {
+            return View(shopService.SearchProducts(term));
+        }
 
-    //    [HttpPost]
-    //    public IActionResult CreateProduct(Product product)
-    //    {
-    //        if (shopService.CreateProduct(product))
-    //            return Ok();
-    //        else
-    //            return StatusCode(500);
-    //    }
+        [HttpPost]
+        public ActionResult CreateProduct(Product product)
+        {
+            if (shopService.CreateProduct(product))
+                return Json(true);
+            else
+                return Json(false);
+        }
 
-    //    [HttpDelete]
-    //    public IActionResult DeleteProduct(int id)
-    //    {
-    //        if (shopService.DeleteProduct(id))
-    //            return Ok(id);
-    //        else
-    //            return StatusCode(500);
-    //    }
+        [HttpDelete]
+        public ActionResult DeleteProduct(int id)
+        {
+            if (shopService.DeleteProduct(id))
+                return Json(id);
+            else
+                return Json(false);
+        }
 
-    //    [HttpGet]
-    //    public IActionResult ProductsStock()
-    //    {
-    //        return Ok(shopService.GetProductsStock());
-    //    }
+        [HttpGet]
+        public ActionResult ProductsStock()
+        {
+            return Json(shopService.GetProductsStock());
+        }
     }
 }

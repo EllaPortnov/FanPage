@@ -41,11 +41,11 @@
                 </div>
             </form>
             <div id="products">
-                @*@foreach (var product in Model.Products)
+                @foreach (var product in Model.Products)
                 {
                     <!-- <div class="col-sm-4"> -->
                     <div class="card" product-id="@product.ProductID">
-                        <img class="card-img-top" src="@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
+                        <img class="card-img-top" src="..\..\assets\@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
                         <div class="card-body">
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">@product.Description</p>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <!-- </div> -->
-                }*@
+                }
             </div>
             <!-- Modal -->
             <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -66,7 +66,7 @@
                                 </button>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <img src="~/images/product.png" id="product-image">
+                                        <!--<img src="~/images/product.png" id="product-image">-->  
                                         <input type="file" id="imageFile" style="display:none">
                                     </div>
                                     <div class="col-md-7">
@@ -90,7 +90,7 @@
                                             <div class="col-md-6 row-title">In Stock:</div>
                                             <div id="product-in-stock" class="product-info">?</div>
                                         </div>
-                                        @if (Session["IsAdmin"]!=null && (bool)Session["IsAdmin"])
+                                        @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
                                         {
                                             <button type="button" class="btn btn-default btn-sm" id="editBtn">
                                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
@@ -113,6 +113,8 @@
     </main>
     <!-- page-content" -->
 </div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 <!-- page-wrapper -->
 <script>
     jQuery(function ($) {
