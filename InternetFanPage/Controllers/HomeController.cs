@@ -31,9 +31,18 @@ namespace InternetFanPage.Controllers
             return View();
         }
 
-        public ActionResult Products(string searchTerm, int categoryId = 1)
+        //public ActionResult Products()
+        //{
+
+        //    model.Products = shopService.GetAllProductsFromInventory();
+        //    model.Categories = shopService.GetAllCategories();
+
+        //    return View(model);
+        //}
+
+        public ActionResult Products(string searchTerm, int categoryId = -1)
         {
-           // LoadUserData();
+            //LoadUserData();
 
             if (categoryId > 0)
             {
