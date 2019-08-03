@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace InternetFanPage.Models
 {
     public class Concert
