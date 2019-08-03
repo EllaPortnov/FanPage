@@ -275,8 +275,8 @@
                 $('#productModal').attr('product-id', productId);
 
                 $('#productModal').modal();
-            }).fail(function () {
-                console.log('failed to fetch product');
+            }).fail(function (product) {
+                console.log('failed to fetch product' + product);
             })
 
             e.preventDefault();

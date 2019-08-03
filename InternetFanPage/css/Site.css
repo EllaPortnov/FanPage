@@ -175,3 +175,11 @@ video {
 .login-help {
     font-size: 14px;
 }
+
+
+#products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    /* grid-column-gap: 50px; */
+}

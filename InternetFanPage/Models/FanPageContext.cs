@@ -19,6 +19,8 @@ namespace InternetFanPage.Models
         public DbSet<Inventory> Inventory { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
