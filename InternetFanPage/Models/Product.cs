@@ -10,9 +10,9 @@ namespace InternetFanPage.Models
 
         public string Description { get; set; }
 
-        public int CategoryID { get; set; }
+        public int SupplierID { get; set; }
 
-        public int Inventory { get; set; }
+        public int CategoryID { get; set; }
 
         public string Name { get; set; }
 

@@ -83,7 +83,7 @@ namespace InternetFanPage.Controllers
                 return HttpNotFound();
             }
 
-            return Json(product);
+            return Json(product, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

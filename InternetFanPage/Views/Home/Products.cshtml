@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Shop";
 }
-<link rel="stylesheet" href="~/css/sidebar.css" />
 <div class="page-wrapper chiller-theme toggled">
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars"></i>
@@ -11,25 +10,26 @@
     <aside id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
             <div class="sidebar-brand">
-                <a href="#">Categories</a>
-                <div id="close-sidebar">
-                    <i class="fas fa-times"></i>
+                <div class="sidebar-brand">
+                    <a href="#">Categories</a>
+                    <div id="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a asp-controller="Home" asp-action="Products" asp-route-categoryId="@category.CategoryID">
+                                    <span>@category.Name.ToString() (@category.Count)</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <!-- sidebar-menu  -->
             </div>
-            <div class="sidebar-menu">
-                <ul>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <li>
-                            <a asp-controller="Home" asp-action="Products" asp-route-categoryId="@category.CategoryID">
-                                <span>@category.Name.ToString() (@category.Count)</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <!-- sidebar-menu  -->
-        </div>
     </aside>
     <!-- sidebar-wrapper  -->
     <main class="page-content">
@@ -66,7 +66,6 @@
                                 </button>
                                 <div class="row">
                                     <div class="col-md-5">
-                                        <!--<img src="~/images/product.png" id="product-image">-->  
                                         <input type="file" id="imageFile" style="display:none">
                                     </div>
                                     <div class="col-md-7">
@@ -113,7 +112,10 @@
     </main>
     <!-- page-content" -->
 </div>
+<link rel="stylesheet" href="~/css/sidebar.css" />
+
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 
 <!-- page-wrapper -->
 <script>
@@ -260,13 +262,13 @@
             $.ajax('/Home/GetProduct?id=' + productId).done(function (product) {
 
                 console.log(product)
-                $('#productModal #product-name').html(product.productName);
-                $('#productModal #product-price').html(product.price);
-                $('#productModal #product-category').html(product.category.name);
-                $('#productModal #product-description').html(product.description);
-                var stockIcon = product.isInStock ? "glyphicon-ok" : "glyphicon-remove";
+                $('#productModal #product-name').html(product.Name);
+                $('#productModal #product-price').html(product.Price);
+                // $('#productModal #product-category').html(product.category.Name);
+                $('#productModal #product-description').html(product.Description);
+                var stockIcon = product.IsInStock ? "glyphicon-ok" : "glyphicon-remove";
                 $('#productModal #product-in-stock').html("<span class=\"glyphicon " + stockIcon + "\" aria-hidden=\"true\"></span>");
-                $('#productModal #product-image').attr('src', product.image);
+                $('#productModal #product-image').attr('src', product.Image);
 
                 $('#editBtn').css('display', 'inline-block');
                 $('#saveBtn').css('display', 'none');
