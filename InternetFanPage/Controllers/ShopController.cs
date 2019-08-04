@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using InternetFanPage.Services;
 using InternetFanPage.Models;
 
@@ -12,10 +14,10 @@ namespace InternetFanPage.Controllers
         {
             return Json(shopService.GetAllProductsFromInventory());
         }
-
-        public ActionResult GetAllCategories()
+        [HttpGet]
+        public IEnumerable<CategoryResult> GetAllCategories()
         {
-            return Json(shopService.GetAllCategories());
+            return shopService.GetAllCategories();
         }
 
         public ActionResult SearchProducts(string term)
