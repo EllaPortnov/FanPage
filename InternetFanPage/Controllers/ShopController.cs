@@ -15,9 +15,10 @@ namespace InternetFanPage.Controllers
             return Json(shopService.GetAllProductsFromInventory());
         }
         [HttpGet]
-        public IEnumerable<CategoryResult> GetAllCategories()
+        public ActionResult GetAllCategories()
         {
-            return shopService.GetAllCategories();
+            var Categories = shopService.GetAllCategories();
+            return Json(Categories, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SearchProducts(string term)

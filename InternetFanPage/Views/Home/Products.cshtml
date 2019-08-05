@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Shop";
 }
+
 <div class="page-wrapper chiller-theme toggled">
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars"></i>
@@ -10,6 +11,7 @@
     <aside id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
             <div class="sidebar-brand">
+                <div class="sidebar-brand">
                 <div class="sidebar-brand">
                     <a href="#">Categories</a>
                     <div id="close-sidebar">
@@ -164,10 +166,10 @@
                 var category = $('#product-category').text();
                 input = "<select id='product-category-input' class='form-control'>";
                 for (i = 0; i < categories.length; i++) {
-                    input += '<option value=' + categories[i].categoryID;
-                    if (categories[i].name == category)
+                    input += '<option value=' + categories[i].CategoryID;
+                    if (categories[i].Name == category)
                         input += ' selected';
-                    input += '>' + categories[i].name + '</option>';
+                    input += '>' + categories[i].Name + '</option>';
                 }
                 input += "</select>";
                 $('#product-category').html(input);
@@ -181,7 +183,7 @@
                 $('#editBtn').css('display', 'none');
                 $('#saveBtn').css('display', 'inline-block');
 
-            }).fail(function () {
+            }).fail(function (e) {
                 console.log('failed to fetch categories');
             })
 
@@ -264,7 +266,7 @@
                 console.log(product)
                 $('#productModal #product-name').html(product.Name);
                 $('#productModal #product-price').html(product.Price);
-                // $('#productModal #product-category').html(product.category.Name);
+                $('#productModal #product-category').html(product.Category.Name);
                 $('#productModal #product-description').html(product.Description);
                 var stockIcon = product.IsInStock ? "glyphicon-ok" : "glyphicon-remove";
                 $('#productModal #product-in-stock').html("<span class=\"glyphicon " + stockIcon + "\" aria-hidden=\"true\"></span>");
