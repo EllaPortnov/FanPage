@@ -19,5 +19,9 @@ namespace InternetFanPage.Models
         public string Password { get; set; }
 
         public int IsAdmin { get; set; }
+
+        public string FBUserId { get; set; }    
+
+        public string FBAccessToken { get; set; }
     }
 }
