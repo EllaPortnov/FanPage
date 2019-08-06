@@ -10,9 +10,16 @@ namespace InternetFanPage.Controllers
     {
         UserServices userService = new UserServices();
 
-        public ActionResult FacebookLogin(LoginDetails details)
+        public ActionResult FacebookLogin(string firstName)
         {
-            LoginResult result = null;
+            LoginResult result = userService.FacebookLogin();
+
+            if (result.LoginSucceeded)
+            {
+                Session["User"] = (firstName);
+                Session["IsAdmin"] = (false);
+                Session["FBLogin"] = true;
+            }
 
             return Json(result);
         }
@@ -49,6 +56,11 @@ namespace InternetFanPage.Controllers
         {
             HttpContext.Session.Remove("User");
             HttpContext.Session.Remove("IsAdmin");
+
+            if (Session["FBLogin"] != null)
+            {
+                HttpContext.Session.Remove("FBLogin");
+            }
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }

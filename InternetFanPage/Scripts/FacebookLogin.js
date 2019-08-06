@@ -43,7 +43,7 @@ function statusChangeCallback(response) {
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
         // Logged into your app and Facebook.
-        testAPI();
+        UpdateSession();
     } else {
         // The person is not logged into your app or we are unable to tell.
         document.getElementById('status').innerHTML = 'Please log ' +
@@ -98,12 +98,51 @@ window.fbAsyncInit = function () {
 
 // Here we run a very simple test of the Graph API after login is
 // successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
+function UpdateSession() {
+
+    //$.ajax({
+    //    url: '/Users/FacebookLogin',
+    //    method: 'POST',
+    //    data: {
+    //        firstName: 
+    //    }
+    //})
+    //    .done(function (result) {
+    //        if (!result.LoginSucceeded) {
+    //            alert('incorrect user/password');
+    //            return;
+    //        }
+    //        location.reload()
+    //    })
+    //    .fail(function () {
+    //        console.log("login failed");
+    //    })
+
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function (response) {
-        console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-            'Thanks for logging in, ' + response.name + '!';
-        console.log(response);
+    FB.api('/me', { fields: 'first_name' }, function (response) {
+
+        $.ajax({
+            url: '/Users/FacebookLogin',
+            method: 'POST',
+            data: {
+                firstName: response.first_name
+            }
+        })
+            .done(function (result) {
+                if (!result.LoginSucceeded) {
+                    alert('Problem with login, try again later..');
+                    return;
+                }
+                location.reload()
+            })
+            .fail(function () {
+                console.log("login failed");
+            })
+
+
+        //console.log('Successful login for: ' + response.name);
+        //document.getElementById('status').innerHTML =
+        //    'Thanks for logging in, ' + response.name + '!';
+        //console.log(response);
     });
 }

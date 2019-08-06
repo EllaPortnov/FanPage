@@ -9,25 +9,25 @@ namespace InternetFanPage.Services
 {
     public class UserServices
     {
-        public LoginResult FacebookLogin(string userId, string accessToken)
+        public LoginResult FacebookLogin()
         {
-            using (var context = new FanPageContext())
+            //using (var context = new FanPageContext())
+            //{
+                //var userDetails = context.Users.Where(p => p.FBUserId == userId).FirstOrDefault();
+
+                //if (userDetails == null)
+                //{
+                //    // TODO: request facebook for the details and create user
+                //}
+
+            var token = convertToMd5(DateTime.Now.ToString());
+
+            return new LoginResult()
             {
-                var userDetails = context.Users.Where(p => p.FBUserId == userId).FirstOrDefault();
-
-                if (userDetails == null)
-                {
-                    // TODO: request facebook for the details and create user
-                }
-
-                var token = convertToMd5(DateTime.Now.ToString());
-
-                return new LoginResult()
-                {
-                    LoginSucceeded = true,
-                    Token = token
-                };
-            }
+                LoginSucceeded = true,
+                Token = token
+            };
+            //}
         }
 
         public LoginResult AttemptLogin(LoginDetails input)
