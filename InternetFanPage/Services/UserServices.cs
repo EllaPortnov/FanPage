@@ -9,6 +9,10 @@ namespace InternetFanPage.Services
 {
     public class UserServices
     {
+        public LoginResult FacebookLogin(LoginDetails input)
+        {
+            return null;
+        }
 
         public LoginResult AttemptLogin(LoginDetails input)
         {
