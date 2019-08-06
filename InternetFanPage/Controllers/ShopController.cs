@@ -21,6 +21,13 @@ namespace InternetFanPage.Controllers
             return Json(Categories, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetAllAndNullCategories()
+        {
+            var Categories = shopService.GetAllAndNullCategories();
+            return Json(Categories, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult SearchProducts(string term)
         {
             return View(shopService.SearchProducts(term));

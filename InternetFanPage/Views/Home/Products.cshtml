@@ -22,11 +22,15 @@
                     <ul>
                         @foreach (var category in Model.Categories)
                         {
-                            <li>
-                                <a asp-controller="Home" asp-action="Products" asp-route-categoryId="@category.CategoryID">
-                                    <span>@category.Name.ToString() (@category.Count)</span>
-                                </a>
-                            </li>
+                        <li>
+                            <a href="/Home/Products?categoryId=@category.CategoryID">
+                                <span>@category.Name.ToString() (@category.Count)</span>
+                            </a>
+                            <!--
+    <a href="" asp-controller="Home" asp-action="Products" asp-route-categoryId="@category.CategoryID">
+
+    </a>-->
+                        </li>
                         }
                     </ul>
                 </div>
@@ -47,7 +51,7 @@
                 {
                     <!-- <div class="col-sm-4"> -->
                     <div class="card" product-id="@product.ProductID">
-                        <img class="card-img-top" src="..\..\assets\@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
+                        <img class="card-img-top" src="~/assets/@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
                         <div class="card-body">
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">@product.Description</p>
@@ -153,7 +157,7 @@
         });
 
         $('#editBtn').click(function (e) {
-            $.ajax('/Shop/GetAllCategories').done(function (categories) {
+            $.ajax('/Shop/GetAllAndNullCategories').done(function (categories) {
 
                 var name = $('#product-name').text();
                 var input = "<input id='product-name-input' type='text' class='form-control' value=\"" + name + "\">";
@@ -217,7 +221,7 @@
                         Price: $('#product-price-input').val(),
                         Description: $('#product-description-input').val(),
                         CategoryID: $('#product-category-input').val(),
-                        ProductName: $('#product-name-input').val(),
+                        Name: $('#product-name-input').val(),
                         ProductID: productId,
                         Image: productImage
                     }

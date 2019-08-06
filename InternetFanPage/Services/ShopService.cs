@@ -41,6 +41,14 @@ namespace InternetFanPage.Services
             }
         }
 
+        public IList<Category> GetAllAndNullCategories()
+        {
+            using (var context = new FanPageContext())
+            {
+                return (context.Categories.ToList());
+            }
+        }
+
         public IList<Product> SearchProducts(string term)
         {
             using (var context = new FanPageContext())
@@ -67,7 +75,7 @@ namespace InternetFanPage.Services
             }
         }
 
-        public bool UpdateProduct(Product product)
+        public Product UpdateProduct(Product product)
         {
             using (var context = new FanPageContext())
             {
@@ -88,10 +96,10 @@ namespace InternetFanPage.Services
                 }
                 catch (Exception)
                 {
-                    return false;
+                    return null;
                 }
 
-                return true;
+                return targetProduct;
             }
         }
 
