@@ -89,10 +89,7 @@ namespace InternetFanPage.Controllers
         [HttpPost]
         public ActionResult UpdateProduct(Product product)
         {
-            if (shopService.UpdateProduct(product))
-                return View(product);
-            else
-                return Json(500);
+            return Json(shopService.UpdateProduct(product));
         }
     }
 }
