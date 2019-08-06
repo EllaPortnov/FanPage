@@ -11,28 +11,26 @@
     <aside id="sidebar" class="sidebar-wrapper">
         <div class="sidebar-content">
             <div class="sidebar-brand">
-                <div class="sidebar-brand">
-                <div class="sidebar-brand">
-                    <a href="#">Categories</a>
-                    <div id="close-sidebar">
-                        <i class="fas fa-times"></i>
-                    </div>
+                <a href="#">Categories</a>
+                <div id="close-sidebar">
+                    <i class="fas fa-times"></i>
                 </div>
-                <div class="sidebar-menu">
-                    <ul>
-                        @foreach (var category in Model.Categories)
-                        {
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    @foreach (var category in Model.Categories)
+                    {
                         <li>
                             <a href="/Home/Products?categoryId=@category.CategoryID">
                                 <span>@category.Name.ToString() (@category.Count)</span>
                             </a>
-                      
+
                         </li>
-                        }
-                    </ul>
-                </div>
-                <!-- sidebar-menu  -->
+                    }
+                </ul>
             </div>
+            <!-- sidebar-menu  -->
+        </div>
     </aside>
     <!-- sidebar-wrapper  -->
     <main class="page-content">
