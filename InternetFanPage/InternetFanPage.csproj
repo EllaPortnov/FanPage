@@ -380,7 +380,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53310</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53310/</IISUrl>
+          <IISUrl>https://localhost:44395/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
