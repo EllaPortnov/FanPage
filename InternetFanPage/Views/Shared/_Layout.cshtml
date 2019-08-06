@@ -25,7 +25,10 @@
 
             @if (Session["User"] == null)
             {
-                <div class="fb-login-button col-sm-2 login" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true"></div>
+                @*<div class="fb-login-button col-sm-2 login" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="true"></div>*@
+
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
 
                 <div class="col-sm-2 login">
                     <a href="#" id="loginBtn" class="loginBtn">Login/Register</a>
@@ -37,6 +40,9 @@
                 <a href="#" id="logoutBtn">Log Out</a>
 
             }
+
+            <div id="status">
+            </div>
         </div>
         <div class="navbar navbar-inverse">
             <div class="container">
