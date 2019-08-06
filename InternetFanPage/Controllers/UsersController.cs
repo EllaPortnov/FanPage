@@ -10,6 +10,13 @@ namespace InternetFanPage.Controllers
     {
         UserServices userService = new UserServices();
 
+        public ActionResult FacebookLogin(LoginDetails details)
+        {
+            LoginResult result = null;
+
+            return Json(result);
+        }
+
         public ActionResult AttemptLogin(LoginDetails details)
         {
             LoginResult result = userService.AttemptLogin(details);
