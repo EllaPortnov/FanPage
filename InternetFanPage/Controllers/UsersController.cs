@@ -18,6 +18,8 @@ namespace InternetFanPage.Controllers
                 User user = userService.GetUser(details.Username);
                 Session["User"] = (user.FirstName);
                 Session["IsAdmin"] = (user.IsAdmin == 1);
+                Session["UserID"] = (user.UserID);
+
 
             }
             return Json(result);

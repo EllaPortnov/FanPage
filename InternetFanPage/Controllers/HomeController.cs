@@ -86,6 +86,13 @@ namespace InternetFanPage.Controllers
             return Json(product, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult BuyProduct(int userId,int id)
+        {
+            shopService.BuyProduct(userId, id);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult UpdateProduct(Product product)
         {
