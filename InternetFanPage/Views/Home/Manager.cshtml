@@ -23,11 +23,7 @@ Statistics
         $("#tweet").submit(function (e) {
             e.preventDefault()
 
-            //var data = $(this).serialize();
             var url = $(this).attr("action");
-            var form = $(this);
-
-            //data = JSON.parse(data);
 
             $.ajax({
                         url: url,
@@ -37,8 +33,6 @@ Statistics
                         }
             })
                 .done(function (result) {
-                    console.log("done");
-                    console.log(result);
                     location.reload();
                 })
                 .fail(function (result) {
