@@ -71,18 +71,29 @@ video {
     margin-left: 20%;
 }
 
+#contentWrapper {
+    display: flex;
+
+}
+
+#tweetsList {
+    overflow-y: scroll;
+    height: 500px;
+    width: 40%;
+    margin-top: 10%;
+}
+
+#about {
+    flex: 1;
+    margin-left: 5%;
+}
+
 .newsTitle {
     text-shadow: 3px 2px gray;
     font-family: myFont;
     font-size: 50px;
     text-align: center;
     margin-top: 50px;
-}
-
-.tweetsList {
-    overflow-y: scroll;
-    height: 500px;
-    width: 40%;
 }
 
 .Stories {
