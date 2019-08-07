@@ -19,7 +19,7 @@ namespace InternetFanPage.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Inventory> Inventory { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<Sale> Suppliers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<User> Users { get; set; }
 
 

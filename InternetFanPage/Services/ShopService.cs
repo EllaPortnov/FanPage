@@ -75,6 +75,38 @@ namespace InternetFanPage.Services
             }
         }
 
+        public bool BuyProduct(int UserId, int id)
+        {
+            using (var context = new FanPageContext())
+            {
+                
+                var targetInventory = context.Inventory.Where(p => p.ProductID == id).FirstOrDefault();
+                if (targetInventory is null)
+                {
+                    return false;
+                }
+                targetInventory.Quantity--;
+
+                Sale saleToAdd = new Sale()
+                {
+                    ProductID = id,
+                    UserID = UserId             
+                };
+
+                try
+                {
+                    context.Inventory.Update(targetInventory);
+                    context.Sales.Add(saleToAdd);
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public Product UpdateProduct(Product product)
         {
             using (var context = new FanPageContext())

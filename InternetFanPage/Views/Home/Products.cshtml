@@ -51,6 +51,7 @@
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">@product.Description</p>
                             <a href="#" class="btn btn-primary view-product-btn">Details</a>
+                           
                         </div>
                     </div>
                     <!-- </div> -->
@@ -90,6 +91,10 @@
                                             <div class="col-md-6 row-title">In Stock:</div>
                                             <div id="product-in-stock" class="product-info">?</div>
                                         </div>
+                                        @if (@Session["User"] != null)
+                                        {
+                                            <a href="#" style="visibility:visible" id="buy-product-btn" class="btn btn-primary buy-product-btn">Buy</a>
+                                        }
                                         @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
                                         {
                                             <button type="button" class="btn btn-default btn-sm" id="editBtn">
@@ -110,6 +115,7 @@
                 </div>
             </div>
         </section>
+        <input type="hidden" id="session" data-value="@Session["UserID"]"/>
     </main>
     <!-- page-content" -->
 </div>
@@ -258,6 +264,7 @@
             e.preventDefault();
         })
 
+
         $(".view-product-btn").click(function (e) {
             var productId = $(this).parents('.card').attr('product-id');
             $.ajax('/Home/GetProduct?id=' + productId).done(function (product) {
@@ -270,7 +277,8 @@
                 var stockIcon = product.IsInStock ? "glyphicon-ok" : "glyphicon-remove";
                 $('#productModal #product-in-stock').html("<span class=\"glyphicon " + stockIcon + "\" aria-hidden=\"true\"></span>");
                 $('#productModal #product-image').attr('src', product.Image);
-
+                var bIsShowBuy = product.IsInStock ? "visibility:visible" : "visibility:hidden";
+                $('#buy-product-btn').attr('style', bIsShowBuy);
                 $('#editBtn').css('display', 'inline-block');
                 $('#saveBtn').css('display', 'none');
                 $('#imageFile').css('display', 'none');
@@ -284,5 +292,18 @@
 
             e.preventDefault();
         })
+        $(".buy-product-btn").click(function (e) {
+            var productId = $('#productModal').attr('product-id');
+            var UserID = $('#session').data('value');
+            $.ajax('/Home/BuyProduct?id=' + productId + '&userId=' + UserID).done(function (bIsSuccess) {
+                if (bIsSuccess) 
+                    alert("Bought");
+                else
+                    alert('Sorry, we are out of it');
+            }).fail(function (product) {
+                alert("We had a problem");
+            })
 
+            e.preventDefault();
+        })
     });</script>
