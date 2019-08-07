@@ -93,7 +93,7 @@
                                         </div>
                                         @if (@Session["User"] != null)
                                         {
-                                            <a href="#" class="btn btn-primary buy-product-btn">Buy</a>
+                                            <a href="#" style="visibility:visible" id="buy-product-btn" class="btn btn-primary buy-product-btn">Buy</a>
                                         }
                                         @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
                                         {
@@ -277,7 +277,8 @@
                 var stockIcon = product.IsInStock ? "glyphicon-ok" : "glyphicon-remove";
                 $('#productModal #product-in-stock').html("<span class=\"glyphicon " + stockIcon + "\" aria-hidden=\"true\"></span>");
                 $('#productModal #product-image').attr('src', product.Image);
-
+                var bIsShowBuy = product.IsInStock ? "visibility:visible" : "visibility:hidden";
+                $('#buy-product-btn').attr('style', bIsShowBuy);
                 $('#editBtn').css('display', 'inline-block');
                 $('#saveBtn').css('display', 'none');
                 $('#imageFile').css('display', 'none');
@@ -294,11 +295,13 @@
         $(".buy-product-btn").click(function (e) {
             var productId = $('#productModal').attr('product-id');
             var UserID = $('#session').data('value');
-            $.ajax('/Home/BuyProduct?id=' + productId + '&userId=' + UserID).done(function () {
-
-                alert("Bought");
+            $.ajax('/Home/BuyProduct?id=' + productId + '&userId=' + UserID).done(function (bIsSuccess) {
+                if (bIsSuccess) 
+                    alert("Bought");
+                else
+                    alert('Sorry, we are out of it');
             }).fail(function (product) {
-                console.log('failed to buy product' + product);
+                alert("We had a problem");
             })
 
             e.preventDefault();

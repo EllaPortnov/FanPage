@@ -81,13 +81,16 @@ namespace InternetFanPage.Services
             {
                 
                 var targetInventory = context.Inventory.Where(p => p.ProductID == id).FirstOrDefault();
+                if (targetInventory is null)
+                {
+                    return false;
+                }
                 targetInventory.Quantity--;
 
                 Sale saleToAdd = new Sale()
                 {
                     ProductID = id,
-                    UserID = UserId
-                    
+                    UserID = UserId             
                 };
 
                 try
