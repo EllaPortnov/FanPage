@@ -79,6 +79,12 @@ video {
     margin-top: 50px;
 }
 
+.tweetsList {
+    overflow-y: scroll;
+    height: 500px;
+    width: 40%;
+}
+
 .Stories {
     font-size: 20px;
     border: solid;
@@ -86,7 +92,6 @@ video {
     border-color: black;
     border-radius: 4px;
     column-count: 3;
-
 }
 
 /****** LOGIN MODAL ******/
