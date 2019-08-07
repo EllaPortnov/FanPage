@@ -9,5 +9,19 @@ Facebook
 
 Statistics
 
+<h1>TWEETER POSTS!!!</h1>
+<form id="tweet" action="">
+    Tweet this text:<br />
+    <input id="textToTweet" name="text" type="text" />
+    <input id="submitTweet" type="submit" value="submit" />
+</form>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
+<script>
+    $(document).ready(function() { 
+                $("form").submit(function(e) { 
+                    console.log(e);
+                }); 
+            }); 
+</script>
