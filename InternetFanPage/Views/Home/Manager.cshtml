@@ -10,7 +10,7 @@ Facebook
 Statistics
 
 <h1>TWEETER POSTS!!!</h1>
-<form id="tweet" action="">
+<form id="tweet" action="/Manager/SendTweet">
     Tweet this text:<br />
     <input id="textToTweet" name="text" type="text" />
     <input id="submitTweet" type="submit" value="submit" />
@@ -20,8 +20,30 @@ Statistics
 
 <script>
     $(document).ready(function() { 
-                $("form").submit(function(e) { 
-                    console.log(e);
-                }); 
-            }); 
+        $("#tweet").submit(function (e) {
+            e.preventDefault()
+
+            //var data = $(this).serialize();
+            var url = $(this).attr("action");
+            var form = $(this);
+
+            //data = JSON.parse(data);
+
+            $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            Text: $("#textToTweet").val()
+                        }
+            })
+                .done(function (result) {
+                    console.log("done");
+                    console.log(result);
+                    location.reload();
+                })
+                .fail(function (result) {
+                    console.log("fail" + result);
+                })
+        });
+    }); 
 </script>
