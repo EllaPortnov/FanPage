@@ -48,6 +48,11 @@ namespace InternetFanPage.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult ProductsByUser()
+        {
+            return Json(userService.ProductsByUser());
+        }
+
         // GET: User
         public ActionResult Index()
         {

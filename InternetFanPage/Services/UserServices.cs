@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.Web.Mvc;
 
 namespace InternetFanPage.Services
 {
@@ -58,6 +58,11 @@ namespace InternetFanPage.Services
                 Context.Users.Add(newUser);
                 Context.SaveChanges();
             }
+            return true;
+        }
+
+        public bool ProductsByUser()
+        {
             return true;
         }
 
