@@ -341,6 +341,7 @@
     <Compile Include="Models\ProductResult.cs" />
     <Compile Include="Models\ProductsPageModel.cs" />
     <Compile Include="Models\ProductStockResult.cs" />
+    <Compile Include="Models\ProductsUser.cs" />
     <Compile Include="Models\RegisterDetails.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\Supplier.cs" />

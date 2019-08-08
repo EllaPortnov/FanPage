@@ -50,7 +50,7 @@ namespace InternetFanPage.Controllers
 
         public ActionResult ProductsByUser()
         {
-            return Json(userService.ProductsByUser());
+            return Json(userService.ProductsByUser(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: User
