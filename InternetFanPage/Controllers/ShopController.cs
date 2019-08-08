@@ -14,6 +14,12 @@ namespace InternetFanPage.Controllers
         {
             return Json(shopService.GetAllProductsFromInventory());
         }
+
+        public ActionResult SalesPerCategory()
+        {
+            return Json(shopService.SalesPerCategory(), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult GetAllCategories()
         {

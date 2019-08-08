@@ -41,6 +41,26 @@ namespace InternetFanPage.Services
             }
         }
 
+        public IList<SalesCategory> SalesPerCategory()
+        {
+            using (var context = new FanPageContext())
+            {
+                var Query = from c in context.Categories
+                    join p in context.Products
+                        on c.CategoryID equals p.ProductID
+                    join s in context.Sales
+                        on p.ProductID equals s.ProductID
+                    group c by c.CategoryID into newCategory
+                    select new SalesCategory()
+                    {
+                        CategoryName = newCategory.Key,
+                        SalesSum = newCategory.Sum(p => p.CategoryID)
+                    };
+                IList<SalesCategory> finalResult = Query.ToList();
+                return finalResult;
+            }
+        }
+
         public IList<Category> GetAllAndNullCategories()
         {
             using (var context = new FanPageContext())

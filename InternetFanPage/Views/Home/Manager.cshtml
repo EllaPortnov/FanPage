@@ -79,18 +79,18 @@ Statistics
         var data = [];
 
         // Get JSON data and wait for the response
-    d3.json("/Users/ProductsByUser", function (error, json) {
+    d3.json("/Shop/SalesPerCategory", function (error, json) {
             $.each(json, function (d, i) {
                 data.push({
-                    label: i.UserName,
-                    value: i.UserExpense
+                    label: i.CategoryName,
+                    value: i.SalesSum
                 })
             })
 
         var pie = new d3pie("pieChart", {
             "header": {
             "title": {
-            "text": "Products per user",
+            "text": "Sales per category",
         "fontSize": 22,
         "font": "verdana"
     },
@@ -113,9 +113,17 @@ Statistics
 });
 });
 
-
-// set the dimensions of the canvas
-    var margin = {top: 40, right: 20, bottom: 70, left: 40 },
+    // Get JSON data and wait for the response
+    d3.json("/Users/ProductsByUser", function (error, json) {
+        $.each(json, function (d, i) {
+            data.push({
+                label: i.UserName,
+                value: i.UserExpense
+            })
+        })
+        
+        // set the dimensions of the canvas
+        var margin = { top: 40, right: 20, bottom: 70, left: 40 },
             width = 1200 - margin.left - margin.right,
             height = 350 - margin.top - margin.bottom;
 
@@ -144,4 +152,48 @@ Statistics
             .append("g")
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
+    // scale the range of the data
+    x.domain(data.map(function (d) { return d.label; }));
+    y.domain([0, d3.max(data, function (d) { return d.value; })]);
+
+    // add axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "0em")
+        .attr("dy", "1.5em")
+        .attr("transform", "rotate(-45)");
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 5)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+
+    // Add bar chart
+    svg.selectAll("bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) { return x(d.label); })
+        .attr("width", x.rangeBand())
+        .attr("y", function (d) { return y(d.value); })
+        .attr("height", function (d) { return height - y(d.value); });
+
+    svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .style("font-size", "15px")
+        .style("text-decoration", "underline")
+        .text("Expense of top 6 custemers");
+
+    });
 </script>
