@@ -7,7 +7,7 @@ namespace InternetFanPage.Models
 {
     public class SalesCategory
     {
-        public int CategoryName { get; set; }
+        public string CategoryName { get; set; }
         public int SalesSum { get; set; }
     }
 }

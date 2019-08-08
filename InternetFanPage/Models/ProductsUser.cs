@@ -7,7 +7,7 @@ namespace InternetFanPage.Models
 {
     public class ProductsUser
     {
-        public int UserName { get; set; }
+        public string UserName { get; set; }
         public int UserExpense { get; set; }
     }
 }

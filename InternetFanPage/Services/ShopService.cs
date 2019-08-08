@@ -45,20 +45,29 @@ namespace InternetFanPage.Services
         {
             using (var context = new FanPageContext())
             {
-                var Query = from c in context.Categories
-                    join p in context.Products
-                        on c.CategoryID equals p.ProductID
-                    join s in context.Sales
-                        on p.ProductID equals s.ProductID
-                    group c by c.CategoryID into newCategory
-                    select new SalesCategory()
+
+                return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
                     {
-                        CategoryName = newCategory.Key,
-                        SalesSum = newCategory.Sum(p => p.CategoryID)
-                    };
-                IList<SalesCategory> finalResult = Query.ToList();
-                return finalResult;
+                        Product = product,
+                        Sale = sale
+                    })
+                    .GroupBy(x => x.Product.CategoryID)
+                    .Select(x => new SalesCategory()
+                    {
+                        CategoryName = GetCategoryName(x.Key),
+                        SalesSum = (int)x.Sum(y => y.Product.Price)
+                    })
+                    .ToList();
             }
+        }
+
+        private string GetCategoryName(int key)
+        {
+            using (var context = new FanPageContext())
+            {
+                return context.Categories.Where(c => c.CategoryID == key).FirstOrDefault().Name;
+            }
+                
         }
 
         public IList<Category> GetAllAndNullCategories()

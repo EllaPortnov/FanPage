@@ -67,31 +67,28 @@ namespace InternetFanPage.Services
         {
             using (var context = new FanPageContext())
             {
-                var Query = from s in context.Sales
-                    join u in context.Users
-                        on s.UserID equals u.UserID
-                    join p in context.Products
-                        on s.ProductID equals p.ProductID
-                    group u by u.UserID into newUser
-                    select new ProductsUser()
-                {
-                    UserExpense = newUser.Key,
-                    UserName = newUser.Sum(p=>p.IsAdmin)
-                };
-                IList<ProductsUser> finalResult = Query.ToList();
-                return finalResult;
-//                return context.Users.Join(context.Sales, u => u.UserID, s => s.UserID, (user, sale) => new
-//                    {
-//                        user.Username,
-//                        sale
-//                    })
-//                    .GroupBy(x => x.sale.UserID)
-//                    .Select(x => new ProductsUser()
-//                    {
-//                        UserName = x.Key,
-//                        UserExpense = x.Count()
-//                    })
-//                    .ToArray();
+
+                return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
+                    {
+                        Product = product,
+                        Sale = sale
+                    })
+                    .GroupBy(x => x.Sale.UserID)
+                    .Select(x => new ProductsUser()
+                    {
+                        UserName = GetUserName(x.Key),
+                        UserExpense = (int)x.Sum(y => y.Product.Price)
+                    })
+                    .ToList();
+            }
+        }
+
+        private string GetUserName(int key)
+        {
+            using (var context = new FanPageContext())
+            {
+                var query = context.Users.Where(u => u.UserID == key).FirstOrDefault();
+                return query.FirstName;
             }
         }
 
