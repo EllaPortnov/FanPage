@@ -65,6 +65,8 @@ namespace InternetFanPage.Controllers
 
         public Product RecommendProducts()
         {
+
+
             return null;
         }
     }
