@@ -371,8 +371,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\icon.jpg" />
     <Content Include="Content\images\plus.png" />
+    <Content Include="Content\images\twitter.png" />
     <Content Include="Content\images\videoPhoto.png" />
     <Content Include="css\concerts.css" />
+    <Content Include="css\manager.css" />
+    <Content Include="css\products.css" />
     <Content Include="css\sidebar.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
