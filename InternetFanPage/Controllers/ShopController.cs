@@ -73,18 +73,23 @@ namespace InternetFanPage.Controllers
 
             // Let the database of transactions consist of following itemsets:
 
-            SortedSet<int>[] dataset =
+            //SortedSet<int>[] dataset =
+            //{
+            //    // Each row represents a set of items that have been bought 
+            //    // together. Each number is a SKU identifier for a product.
+            //    new SortedSet<int> { 1, 2, 3, 4 }, // bought 4 items
+            //    new SortedSet<int> { 1, 2, 4 },    // bought 3 items
+            //    new SortedSet<int> { 1, 2 },       // bought 2 items
+            //    new SortedSet<int> { 2, 3, 4 },    // ...
+            //    new SortedSet<int> { 2, 3 },
+            //    new SortedSet<int> { 3, 4 },
+            //    new SortedSet<int> { 2, 4 },
+            //};
+
+            using (var ctx = new FanPageContext())
             {
-                // Each row represents a set of items that have been bought 
-                // together. Each number is a SKU identifier for a product.
-                new SortedSet<int> { 1, 2, 3, 4 }, // bought 4 items
-                new SortedSet<int> { 1, 2, 4 },    // bought 3 items
-                new SortedSet<int> { 1, 2 },       // bought 2 items
-                new SortedSet<int> { 2, 3, 4 },    // ...
-                new SortedSet<int> { 2, 3 },
-                new SortedSet<int> { 3, 4 },
-                new SortedSet<int> { 2, 4 },
-            };
+                // GroupBy to get all of the sales of the same user
+            }
 
             // We will use Apriori to determine the frequent item sets of this database.
             // To do this, we will say that an item set is frequent if it appears in at 
