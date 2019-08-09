@@ -62,5 +62,10 @@ namespace InternetFanPage.Controllers
         {
             return Json(shopService.GetProductsStock());
         }
+
+        public Product RecommendProducts()
+        {
+            return null;
+        }
     }
 }
