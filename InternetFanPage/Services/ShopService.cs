@@ -47,10 +47,10 @@ namespace InternetFanPage.Services
             {
 
                 return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
-                    {
-                        Product = product,
-                        Sale = sale
-                    })
+                {
+                    Product = product,
+                    Sale = sale
+                })
                     .GroupBy(x => x.Product.CategoryID)
                     .Select(x => new SalesCategory()
                     {
@@ -67,7 +67,7 @@ namespace InternetFanPage.Services
             {
                 return context.Categories.Where(c => c.CategoryID == key).FirstOrDefault().Name;
             }
-                
+
         }
 
         public IList<Category> GetAllAndNullCategories()
@@ -148,7 +148,7 @@ namespace InternetFanPage.Services
         {
             using (var context = new FanPageContext())
             {
-                
+
                 var targetInventory = context.Inventory.Where(p => p.ProductID == id).FirstOrDefault();
                 if (targetInventory is null)
                 {
@@ -159,7 +159,7 @@ namespace InternetFanPage.Services
                 Sale saleToAdd = new Sale()
                 {
                     ProductID = id,
-                    UserID = UserId             
+                    UserID = UserId
                 };
 
                 try
@@ -261,6 +261,20 @@ namespace InternetFanPage.Services
             {
                 return context.Products.Where(p => p.CategoryID == id).ToList();
             }
+        }
+
+        public IList<ProductResult> getUserProducts(int UserId)
+        {
+            IList<ProductResult> listToReturn = new List<ProductResult>();
+            using (var context = new FanPageContext())
+            {
+                var sales = context.Sales.Where(u => u.UserID == UserId);
+                foreach (var sale in sales)
+                {
+                    listToReturn.Add(GetProduct(sale.ProductID));
+                }
+            }
+            return listToReturn;
         }
     }
 }
