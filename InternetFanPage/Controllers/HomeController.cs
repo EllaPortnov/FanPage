@@ -97,5 +97,18 @@ namespace InternetFanPage.Controllers
         {
             return Json(shopService.UpdateProduct(product));
         }
+        [HttpPost]
+        public ActionResult UpdateConsert(Concert concert)
+        {
+            return Json(shopService.UpdateConcert(concert));
+        }
+        [HttpDelete]
+        public ActionResult DeleteConcert(int id)
+        {
+            if (shopService.DeleteConcert(id))
+                return Json(id);
+            else
+                return Json(false);
+        }
     }
 }

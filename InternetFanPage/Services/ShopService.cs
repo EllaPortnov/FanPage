@@ -86,6 +86,46 @@ namespace InternetFanPage.Services
             }
         }
 
+        public bool DeleteConcert(int id)
+        {
+            using (var context = new FanPageContext())
+            {
+                var targetConcert = context.Concerts.Where(c => c.ConcertID == id).FirstOrDefault();
+                context.Concerts.Remove(targetConcert);
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        public object UpdateConcert(Concert concert)
+        {
+            using (var context = new FanPageContext())
+            {
+                var targetConcert = context.Concerts.Where(c => c.ConcertID == concert.ConcertID).FirstOrDefault();
+                targetConcert.Price = concert.Price;
+                try
+                {
+                    context.Concerts.Update(targetConcert);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
         public bool CreateProduct(Product product)
         {
             using (var context = new FanPageContext())
