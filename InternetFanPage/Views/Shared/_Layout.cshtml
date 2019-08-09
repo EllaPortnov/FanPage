@@ -152,7 +152,7 @@
                                 alert('incorrect user/password');
                                 return;
                             }
-                            location.reload()
+                            location.href = '/home';
                         })
                         .fail(function () {
                             console.log("login failed");
@@ -212,7 +212,7 @@
             $('#logoutBtn').click(function (e) {
                 $.ajax('/Users/Logout')
                     .done(function (result) {
-                        location.reload()
+                        location.href = '/home';
                     })
                     .fail(function () {
                         console.log("logout failed");

@@ -30,8 +30,14 @@
                     </svg>
                     <h4 id="cbCity"></h4>
                 </div>
-                <div id="cbAddress"></div>
-                <div id="cbDate"></div>
+                <div>
+                    <div>Address:</div>
+                    <div id="cbAddress"></div>
+                </div>
+                <div>
+                    <div>Date:</div>
+                    <div id="cbDate"></div>
+                </div>
                 <div>
                     <div>Price:</div>
                     <div id="cbPrice"></div>
@@ -106,7 +112,7 @@
         $("#cbCity").text(pushpin.metadata.City);
         $("#cbAddress").text(pushpin.metadata.Address);
         $("#cbDate").text(pushpin.metadata.Date);
-        $("#cbPrice").text(pushpin.metadata.Price + " NIS");
+        $("#cbPrice").text(pushpin.metadata.Price);
 
         weather(pushpin.getLocation().latitude, pushpin.getLocation().longitude);
     }
@@ -151,15 +157,17 @@
         }
     }
 
+    var clickedConcert;
     // Handel list iten click
     $(".concert-list-item").click(function () {
+        clickedConcert = $(this);
         concertSelected(null, $(this));
     });
 
     $('#editBtn').click(function (e) {
 
         var price = $('#cbPrice').text();
-        var input = "<input id='cbPrice' type='text' class='form-control' value=\"" + price + "\">";
+        var input = "<input id='cbPrice-input' type='text' class='form-control' value=\"" + price + "\">";
         $('#cbPrice').html(input);
     
             $('#editBtn').css('display', 'none');
@@ -170,8 +178,35 @@
 
     
     $('#saveBtn').click(function (e) {
-       
+        var ConcertId = clickedConcert.attr('id');
+        var Price = $('#cbPrice-input').val();
+        $.ajax({
+            url: '/Home/UpdateConsert',
+            method: 'POST',
+            data: {
+                Price: Price,
+                ConcertID: ConcertId,
+            }
+        }).done(function (product) {
+            alert('save success!');
+        })
     })
+    $('#deleteBtn').click(function (e) {
+        var ConcertId = clickedConcert.attr('id');
+
+        $.ajax({
+            url: '/Home/DeleteConcert?id=' + ConcertId,
+                method: 'DELETE',
+            }).done(function (id) {
+                alert('delete success!');
+            })
+            .fail(function (error) {
+                console.log('delete concert')
+            })
+
+        e.preventDefault();
+    })
+
 
     $("#cb-x-card").click(function () {
         $("#concert-details").css('disp lay', 'none');
