@@ -18,6 +18,12 @@
             </div>
             <div class="sidebar-menu">
                 <ul>
+                    <li>
+                        <a href="/Home/Products">
+                            <span>All</span>
+                        </a>
+
+                    </li>
                     @foreach (var category in Model.Categories)
                     {
                         <li>
@@ -292,6 +298,7 @@
 
             e.preventDefault();
         })
+
         $(".buy-product-btn").click(function (e) {
             var productId = $('#productModal').attr('product-id');
             var UserID = $('#session').data('value');

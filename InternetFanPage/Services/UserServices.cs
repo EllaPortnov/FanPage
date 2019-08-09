@@ -1,9 +1,11 @@
 ﻿using InternetFanPage.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-
+using System.Web.Mvc;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace InternetFanPage.Services
 {
@@ -59,6 +61,35 @@ namespace InternetFanPage.Services
                 Context.SaveChanges();
             }
             return true;
+        }
+
+        public IList<ProductsUser> ProductsByUser()
+        {
+            using (var context = new FanPageContext())
+            {
+
+                return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
+                    {
+                        Product = product,
+                        Sale = sale
+                    })
+                    .GroupBy(x => x.Sale.UserID)
+                    .Select(x => new ProductsUser()
+                    {
+                        UserName = GetUserName(x.Key),
+                        UserExpense = (int)x.Sum(y => y.Product.Price)
+                    })
+                    .ToList();
+            }
+        }
+
+        private string GetUserName(int key)
+        {
+            using (var context = new FanPageContext())
+            {
+                var query = context.Users.Where(u => u.UserID == key).FirstOrDefault();
+                return query.FirstName;
+            }
         }
 
         private string convertToMd5(string target)

@@ -41,6 +41,35 @@ namespace InternetFanPage.Services
             }
         }
 
+        public IList<SalesCategory> SalesPerCategory()
+        {
+            using (var context = new FanPageContext())
+            {
+
+                return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
+                    {
+                        Product = product,
+                        Sale = sale
+                    })
+                    .GroupBy(x => x.Product.CategoryID)
+                    .Select(x => new SalesCategory()
+                    {
+                        CategoryName = GetCategoryName(x.Key),
+                        SalesSum = (int)x.Sum(y => y.Product.Price)
+                    })
+                    .ToList();
+            }
+        }
+
+        private string GetCategoryName(int key)
+        {
+            using (var context = new FanPageContext())
+            {
+                return context.Categories.Where(c => c.CategoryID == key).FirstOrDefault().Name;
+            }
+                
+        }
+
         public IList<Category> GetAllAndNullCategories()
         {
             using (var context = new FanPageContext())
