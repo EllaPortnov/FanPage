@@ -57,7 +57,7 @@
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">@product.Description</p>
                             <a href="#" class="btn btn-primary view-product-btn">Details</a>
-                           
+
                         </div>
                     </div>
                     <!-- </div> -->
@@ -126,14 +126,38 @@
                 </div>
             </div>
         </section>
-        <input type="hidden" id="session" data-value="@Session["UserID"]"/>
+        <input type="hidden" id="session" data-value="@Session["UserID"]" />
+
+
+
+        <div id="modal-success" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="icon-box">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4>Great!</h4>
+                        <p>Your purchase finished successfully.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
     <!-- page-content" -->
 </div>
 <link rel="stylesheet" href="~/css/sidebar.css" />
+<link rel="stylesheet" href="~/css/products.css" />
+
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
 <!-- page-wrapper -->
 <script>
@@ -168,7 +192,7 @@
             $(".page-wrapper").addClass("toggled");
         });
 
-        $('#add-product').click(function(e) {
+        $('#add-product').click(function (e) {
             $.ajax('/Shop/GetAllAndNullCategories').done(function (categories) {
                 var name = "Ido";
                 var input = "<input id='product-name-input' type='text' class='form-control' value=\"" + name + ">";
@@ -346,10 +370,12 @@
             var productId = $('#productModal').attr('product-id');
             var UserID = $('#session').data('value');
             $.ajax('/Home/BuyProduct?id=' + productId + '&userId=' + UserID).done(function (bIsSuccess) {
-                if (bIsSuccess) 
-                    alert("Bought");
-                else
+                if (bIsSuccess) {
+                    $('#productModal').modal("hide");
+                    $('#modal-success').modal();
+                } else {
                     alert('Sorry, we are out of it');
+                }
             }).fail(function (product) {
                 alert("We had a problem");
             })
