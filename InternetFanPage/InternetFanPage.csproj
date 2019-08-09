@@ -416,6 +416,7 @@
     <Content Include="Views\Home\Concerts.cshtml" />
     <Content Include="Views\Home\Manager.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
+    <Content Include="Views\Home\UserProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="video\" />

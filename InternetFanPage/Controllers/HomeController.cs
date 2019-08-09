@@ -39,6 +39,10 @@ namespace InternetFanPage.Controllers
 
         //    return View(model);
         //}
+        public ActionResult UserProducts()
+        {
+            return View();
+        }
 
         public ActionResult Products(string searchTerm, int categoryId = -1)
         {

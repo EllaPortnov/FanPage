@@ -62,5 +62,12 @@ namespace InternetFanPage.Controllers
         {
             return Json(shopService.GetProductsStock());
         }
+
+        [HttpGet]
+        public ActionResult GetUserProducts(int userId)
+        {
+            return Json(shopService.getUserProducts(userId), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
