@@ -40,6 +40,13 @@ namespace InternetFanPage.Controllers
 
         public ActionResult Shop()
         {
+            //if (Session["UserID"] != null)
+            //{
+            //    int userId = int.Parse(Session["UserID"].ToString());
+
+            //    return View(shopService.RecommendProducts(userId));
+            //}
+
             return View();
         }
 
@@ -59,6 +66,12 @@ namespace InternetFanPage.Controllers
         public ActionResult Products(string searchTermName,  int? searchTermPrice,  int categoryId = -1)
         {
             //LoadUserData();
+            if (Session["UserID"] != null)
+            {
+                int userId = (int)Session["UserID"];
+
+                model.Recommended = shopService.RecommendProducts(userId);
+            }
 
             if (categoryId > 0)
             {

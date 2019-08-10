@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using InternetFanPage.Services;
 using InternetFanPage.Models;
+using Accord.MachineLearning.Rules;
 
 namespace InternetFanPage.Controllers
 {
@@ -53,12 +54,11 @@ namespace InternetFanPage.Controllers
         {
             return Json(shopService.GetProductsStock());
         }
-
+        
         [HttpGet]
         public ActionResult GetUserProducts(int userId)
         {
             return Json(shopService.getUserProducts(userId), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

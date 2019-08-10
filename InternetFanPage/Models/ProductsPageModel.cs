@@ -17,6 +17,8 @@ namespace InternetFanPage.Models
             get;
             set;
         }
+        
+        public IEnumerable<ProductResult> Recommended { get; set; }
 
         public ProductsPageModel()
         {
