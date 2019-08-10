@@ -120,7 +120,16 @@
 
     <script>
         jQuery(function ($) {
-            
+
+            // TO DELETE // 
+
+            $.ajax({
+                url: '/Shop/RecommendProducts',
+                method: 'POST'
+            });
+
+            // TO DELETE //
+
             // Login
             $("#loginBtn").click(function (e) {
                 $('#loginModal').modal();
