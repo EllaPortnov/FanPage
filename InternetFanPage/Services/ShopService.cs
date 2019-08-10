@@ -231,13 +231,13 @@ namespace InternetFanPage.Services
             }
         }
 
-        public IQueryable<object> GetAllSalesByUser()
+        public dynamic GetAllSalesByUser()
         {
             using (var ctx = new FanPageContext())
             {
                 return ctx.Sales.GroupBy(s => s.UserID,
                     s => s.ProductID,
-                    (key, g) => new { UserID = key, Products = g.ToList() });
+                    (key, g) => new { UserID = key, Products = g.ToList() }).ToList();
             }
         }
     }
