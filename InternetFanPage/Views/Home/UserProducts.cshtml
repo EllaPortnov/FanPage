@@ -3,17 +3,16 @@
     ViewBag.Title = "UserPurchase";
 }
 
-<h2>Your Purchases</h2>
+<h2 id="YourPurchase">Your Purchases</h2>
 
 <div class="products"></div>
-
-
-
 <input type="hidden" id="session" data-value="@Session["UserID"]" />
+
+
+<link rel="stylesheet" href="~/css/products.css" />
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
-<link rel="stylesheet" href="~/css/products.css" />
 
 
 <script>
