@@ -68,7 +68,7 @@ namespace InternetFanPage.Services
             using (var context = new FanPageContext())
             {
 
-                return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
+                var prodByUser = context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
                     {
                         Product = product,
                         Sale = sale
@@ -79,7 +79,10 @@ namespace InternetFanPage.Services
                         UserName = GetUserName(x.Key),
                         UserExpense = (int)x.Sum(y => y.Product.Price)
                     })
-                    .ToList();
+                    .OrderByDescending(p => p.UserExpense).ToList();
+
+                prodByUser.RemoveRange(6, prodByUser.Count - 6);
+                return prodByUser;
             }
         }
 
