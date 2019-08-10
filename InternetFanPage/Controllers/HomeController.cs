@@ -50,6 +50,12 @@ namespace InternetFanPage.Controllers
         public ActionResult Products(string searchTerm, int categoryId = -1)
         {
             //LoadUserData();
+            if (Session["UserID"] != null)
+            {
+                int userId = int.Parse(Session["UserID"].ToString());
+
+                model.Rcommended = shopService.RecommendProducts(userId);
+            }
 
             if (categoryId > 0)
             {
