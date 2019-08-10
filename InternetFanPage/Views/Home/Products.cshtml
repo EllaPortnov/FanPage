@@ -51,7 +51,7 @@
             {
                 <h3>Recommended for you:</h3><br />
                 <div id="recommendedProducts">
-                    @foreach (var rec in Model.Rcommended)
+                    @foreach (var rec in Model.Recommended)
                     {
                         <div class="card" product-id="@rec.ProductID">
                             <img class="card-img-top" src="~/assets/@rec.Image" alt="@rec.Name" style='display:block; width:150px;height:150px;'>
@@ -69,9 +69,9 @@
             <div id="products">
                 @foreach (var product in Model.Products)
                 {
-                    if ((Model.Rcommended != null && 
-                        Model.Rcommended.Where(p => p.ProductID == product.ProductID).Count() == 0) ||
-                        Model.Rcommended == null)
+                    if ((Model.Recommended != null &&
+                        Model.Recommended.Where(p => p.ProductID == product.ProductID).Count() == 0) ||
+                        Model.Recommended == null)
                     {
                         <!-- <div class="col-sm-4"> -->
                         <div class="card" product-id="@product.ProductID">

@@ -54,7 +54,7 @@ namespace InternetFanPage.Controllers
             {
                 int userId = (int)Session["UserID"];
 
-                model.Rcommended = shopService.RecommendProducts(userId);
+                model.Recommended = shopService.RecommendProducts(userId);
             }
 
             if (categoryId > 0)
