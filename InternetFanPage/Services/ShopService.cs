@@ -230,5 +230,10 @@ namespace InternetFanPage.Services
                 return ctx.Sales.ToList();
             }
         }
+
+        public IList<Sale> GetAllSalesByUser()
+        {
+            return null;
+        }
     }
 }
