@@ -26,14 +26,19 @@
                 url: '/Shop/GetUserProducts?userId=' + UserID,
                 method: 'GET',
             }).done(function (list) {
+                var objectCount = foo(list);
                 var cardToAdd = "";
+                list = objectCount[0];
                 for (i = 0; i < list.length; i++) {
                     cardToAdd += "<div class='card' product-id=" + list[i].ProductID + ">" +
                         "<img class='card-img-top' src='../assets/" + list[i].Image + "' alt=" + list[i].Name +
                         " style='display:block; width:150px;height:150px;'> " +
                         " <div class='card-body'>" +
                         "<h5 class='card-title'>" + list[i].Name + "</h5>" +
-                        "<h5 class='card-title'>" + list[i].Description + "</h5>";
+                        "<h5 class='card-title'> Amount: " + objectCount[1][i]+ "</h5>" +
+                        "<h5 class='card-title'>" + list[i].Description + "</h5>" +
+                        "</div>" +
+                        "</div>";
 
                 }
                 $(".products").html(cardToAdd);
@@ -41,6 +46,25 @@
                 .fail(function (error) {
                     console.log('There was a problem loading the products')
                 })
+
+            function foo(arr) {
+                var a = [], b = [], prev;
+                arr.sort(function (c, d) { return c.ProductID - d.ProductID });
+                prev = arr[0];
+                a.push(arr[0]);
+                b.push(1);
+                for (var i = 1; i < arr.length; i++) {
+                    if (arr[i].ProductID !== prev.ProductID) {
+                        a.push(arr[i]);
+                        b.push(1);
+                    } else {
+                        b[b.length - 1]++;
+                    }
+                    prev = arr[i];
+                }
+
+                return [a, b];
+            }
         };
 
     });
