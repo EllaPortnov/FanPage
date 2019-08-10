@@ -222,5 +222,10 @@ namespace InternetFanPage.Services
                 return context.Products.Where(p => p.CategoryID == id).ToList();
             }
         }
+
+        public IList<Sale> GetAllSales()
+        {
+            return null;
+        }
     }
 }
