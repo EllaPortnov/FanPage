@@ -98,40 +98,40 @@ namespace InternetFanPage.Controllers
             // least 3 transactions of the database: the value 3 is the support threshold.
 
             // Create a new a-priori learning algorithm with support 3
-            Apriori apriori = new Apriori(threshold: 3, confidence: 0);
+            //Apriori apriori = new Apriori(threshold: 3, confidence: 0);
 
-            // Use the algorithm to learn a set matcher
-            AssociationRuleMatcher<int> classifier = apriori.Learn(dataset);
+            //// Use the algorithm to learn a set matcher
+            //AssociationRuleMatcher<int> classifier = apriori.Learn(dataset);
 
-            // Use the classifier to find orders that are similar to 
-            // orders where clients have bought items 1 and 2 together:
-            int[][] matches = classifier.Decide(new[] { 1, 2 });
+            //// Use the classifier to find orders that are similar to 
+            //// orders where clients have bought items 1 and 2 together:
+            //int[][] matches = classifier.Decide(new[] { 1, 2 });
 
-            // The result should be:
-            // 
-            //   new int[][]
-            //   {
-            //       new int[] { 4 },
-            //       new int[] { 3 }
-            //   };
+            //// The result should be:
+            //// 
+            ////   new int[][]
+            ////   {
+            ////       new int[] { 4 },
+            ////       new int[] { 3 }
+            ////   };
 
-            // Meaning the most likely product to go alongside the products
-            // being bought is item 4, and the second most likely is item 3.
+            //// Meaning the most likely product to go alongside the products
+            //// being bought is item 4, and the second most likely is item 3.
 
-            // We can also obtain the association rules from frequent itemsets:
-            AssociationRule<int>[] rules = classifier.Rules;
+            //// We can also obtain the association rules from frequent itemsets:
+            //AssociationRule<int>[] rules = classifier.Rules;
 
-            // The result will be:
-            // {
-            //     [1] -> [2]; support: 3, confidence: 1, 
-            //     [2] -> [1]; support: 3, confidence: 0.5, 
-            //     [2] -> [3]; support: 3, confidence: 0.5, 
-            //     [3] -> [2]; support: 3, confidence: 0.75, 
-            //     [2] -> [4]; support: 4, confidence: 0.66, 
-            //     [4] -> [2]; support: 4, confidence: 0.8, 
-            //     [3] -> [4]; support: 3, confidence: 0.75, 
-            //     [4] -> [3]; support: 3, confidence: 0.6 
-            // };
+            //// The result will be:
+            //// {
+            ////     [1] -> [2]; support: 3, confidence: 1, 
+            ////     [2] -> [1]; support: 3, confidence: 0.5, 
+            ////     [2] -> [3]; support: 3, confidence: 0.5, 
+            ////     [3] -> [2]; support: 3, confidence: 0.75, 
+            ////     [2] -> [4]; support: 4, confidence: 0.66, 
+            ////     [4] -> [2]; support: 4, confidence: 0.8, 
+            ////     [3] -> [4]; support: 3, confidence: 0.75, 
+            ////     [4] -> [3]; support: 3, confidence: 0.6 
+            //// };
 
             return null;
         }
