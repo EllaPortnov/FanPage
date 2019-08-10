@@ -102,9 +102,19 @@ namespace InternetFanPage.Controllers
             return Json(shopService.UpdateProduct(product));
         }
         [HttpPost]
+        public ActionResult AddProduct(Product product)
+        {
+            return Json(shopService.AddProduct(product));
+        }
+        [HttpPost]
         public ActionResult UpdateConsert(Concert concert)
         {
             return Json(shopService.UpdateConcert(concert));
+        }
+        [HttpPost]
+        public ActionResult UpdateInventory(Inventory inventory)
+        {
+            return Json(shopService.UpdateInventory(inventory));
         }
         [HttpDelete]
         public ActionResult DeleteConcert(int id)

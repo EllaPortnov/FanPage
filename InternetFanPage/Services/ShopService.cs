@@ -106,6 +106,51 @@ namespace InternetFanPage.Services
             }
         }
 
+        public bool UpdateInventory(Inventory inventory)
+        {
+            using (var context = new FanPageContext())
+            {
+                try
+                {
+                    context.Inventory.Add(inventory);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public Product AddProduct(Product pProduct)
+        {
+            using (var context = new FanPageContext())
+            {
+                Product newProd;
+                try
+                {
+                    pProduct.SupplierID = 2;
+                    context.Products.Add(pProduct);
+                    context.SaveChanges();
+                    newProd = context.Products.Where(p => p == pProduct).FirstOrDefault();
+                    //Inventory newProdInventory = new Inventory()
+                    //{
+                    //    ProductID = newProd.ProductID,
+                    //    Quantity = 100
+                    //};
+                    //context.Inventory.Add(newProdInventory);
+                    //context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+
+                return newProd;
+            }
+        }
+
         public object UpdateConcert(Concert concert)
         {
             using (var context = new FanPageContext())
@@ -124,24 +169,6 @@ namespace InternetFanPage.Services
 
             }
             return true;
-        }
-
-        public bool CreateProduct(Product product)
-        {
-            using (var context = new FanPageContext())
-            {
-                try
-                {
-                    context.Products.Add(product);
-                    context.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-
-                return true;
-            }
         }
 
         public bool BuyProduct(int UserId, int id)

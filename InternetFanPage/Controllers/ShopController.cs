@@ -39,15 +39,6 @@ namespace InternetFanPage.Controllers
             return View(shopService.SearchProducts(term));
         }
 
-        [HttpPost]
-        public ActionResult CreateProduct(Product product)
-        {
-            if (shopService.CreateProduct(product))
-                return Json(true);
-            else
-                return Json(false);
-        }
-
         [HttpDelete]
         public ActionResult DeleteProduct(int id)
         {
