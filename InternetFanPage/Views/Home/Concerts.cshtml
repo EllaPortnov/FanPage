@@ -4,15 +4,25 @@
     ViewBag.Title = "Concerts";
 }
 
-<h2>Upconig Concerts</h2>
 <link rel="stylesheet" href="~/css/concerts.css" />
 
+<form asp-controller="Home" asp-action="Concerts" class="form-inline search-form">
+    <h2>Upcoming Concerts</h2>
+
+    <div class="form-group">
+        <input class="form-control" type="text" name="SearchTermName" placeholder="Search by city" aria-label="SearchName" style="width:250px">
+        <input class="form-control" type="number" name="SearchTermPrice" placeholder="filter by max price" aria-label="SearchPrice" style="width:160px">
+        <input type="submit" class="btn btn-default" value="Filter" />
+    </div>
+</form>
 <div class="row">
     <div class="col-sm-3">
+        
         <ul class="list-group">
             <li type="button" class="list-group-item concert-list-title">
                 City Name
             </li>
+
             @foreach (var item in Model)
             {
                 <li type="button" class="list-group-item concert-list-item" id="@item.ConcertID">
@@ -25,8 +35,8 @@
             <li type="button" class="list-group-item current-concert" id="cb">
                 <div class="cb-card-title">
                     <svg id="cb-x-card" class="cb-x-card">
-                        <path fill="none" d="M0 0h24v24H0V0z" />
-                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                        <path fill="none" d="M0 0h24v24H0V0z"/>
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
                     </svg>
                     <h4 id="cbCity"></h4>
                 </div>

@@ -10,15 +10,27 @@ namespace InternetFanPage.Controllers
         private FanPageContext ct = new FanPageContext();
         ShopService shopService = new ShopService();
         ProductsPageModel model = new ProductsPageModel();
+        ConcertsService concertService = new ConcertsService();
 
         public ActionResult Index()
         {
             return View();
         }
        
-        public ActionResult Concerts()
+        public ActionResult Concerts(string searchTermName, int? searchTermPrice)
         {
-            return View(ct.Concerts.AsEnumerable());
+            //var model = null;
+            
+            if (searchTermName == null && searchTermPrice == null)
+            {
+                return View(ct.Concerts.AsEnumerable());
+            }
+            else
+            {
+                 var model = concertService.searchConcert(searchTermName ?? string.Empty, searchTermPrice);
+                 return View(model);
+            }
+
         }
 
         public ActionResult Manager()
