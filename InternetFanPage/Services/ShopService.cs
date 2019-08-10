@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Accord.MachineLearning.Rules;
 using InternetFanPage.Models;
 
 namespace InternetFanPage.Services
@@ -239,6 +240,53 @@ namespace InternetFanPage.Services
                     s => s.ProductID,
                     (key, g) => new { UserID = key, Products = g.ToList() }).ToList();
             }
+        }
+
+        public IList<ProductResult> RecommendProducts(int userId)
+        {
+            var salesByUser = this.GetAllSalesByUser();
+
+            List<int[]> tempDataset = new List<int[]>();
+            int[] currUserSales = null;
+
+            foreach (var userSales in salesByUser)
+            {
+                if (userSales.UserID == userId)
+                {
+                    currUserSales = userSales.Products.ToArray();
+                }
+
+                tempDataset.Add(userSales.Products.ToArray());
+            }
+
+            int[][] dataset = tempDataset.ToArray();
+
+            // We will use Apriori to determine the frequent item sets of this database.
+            // To do this, we will say that an item set is frequent if it appears in at 
+            // least 3 transactions of the database: the value 3 is the support threshold.
+
+            // Create a new a-priori learning algorithm with support 3
+            Apriori apriori = new Apriori(threshold: 1, confidence: 0.5);
+
+            //// Use the algorithm to learn a set matcher
+            AssociationRuleMatcher<int> classifier = apriori.Learn(dataset);
+
+            // Use the classifier to find orders that are similar to 
+            // orders where clients have bought items 1 and 2 together:
+            int[][] matches = classifier.Decide(currUserSales);
+
+            List<ProductResult> recommededProducts = new List<ProductResult>();
+
+            if (matches.Length > 0)
+            {
+                int[] tmpRecommendedProducts = matches[0];
+                foreach (var product in tmpRecommendedProducts)
+                {
+                    recommededProducts.Add(this.GetProduct(product));
+                }
+            }
+
+            return recommededProducts;
         }
     }
 }
