@@ -64,7 +64,7 @@ namespace InternetFanPage.Controllers
             return Json(shopService.GetProductsStock());
         }
 
-        public Product RecommendProducts(User user)
+        public Product RecommendProducts(int? userId)
         {
             // Assume that a large supermarket tracks sales data by stock-keeping unit
             // (SKU) for each item: each item, such as "butter" or "bread", is identified 
