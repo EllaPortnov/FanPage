@@ -34,9 +34,9 @@ namespace InternetFanPage.Controllers
             return Json(Categories, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SearchProducts(string term)
+        public ActionResult SearchProducts(string term, int? price)
         {
-            return View(shopService.SearchProducts(term));
+            return View(shopService.SearchProducts(term,price));
         }
 
         [HttpPost]

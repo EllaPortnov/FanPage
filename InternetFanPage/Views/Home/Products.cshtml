@@ -43,7 +43,8 @@
         <section class="container-fluid">
             <form asp-controller="Home" asp-action="Products" class="form-inline search-form">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="SearchTerm" placeholder="Search" aria-label="Search" style="width:250px">
+                    <input class="form-control" type="text" name="SearchTermName" placeholder="Search by name" aria-label="SearchName" style="width:250px">
+                    <input class="form-control" type="number" name="SearchTermPrice" placeholder="filter by max price" aria-label="SearchPrice" style="width:160px">
                     <input type="submit" class="btn btn-default" value="Filter" />
                 </div>
             </form>

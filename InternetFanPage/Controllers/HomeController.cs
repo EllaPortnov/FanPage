@@ -44,7 +44,7 @@ namespace InternetFanPage.Controllers
             return View();
         }
 
-        public ActionResult Products(string searchTerm, int categoryId = -1)
+        public ActionResult Products(string searchTermName,  int? searchTermPrice,  int categoryId = -1)
         {
             //LoadUserData();
 
@@ -54,7 +54,7 @@ namespace InternetFanPage.Controllers
             }
             else
             {
-                model.Products = shopService.SearchProducts(searchTerm ?? string.Empty);
+                model.Products = shopService.SearchProducts(searchTermName ?? string.Empty, searchTermPrice);
             }
 
             if (model.Categories == null)
@@ -66,9 +66,9 @@ namespace InternetFanPage.Controllers
         }
 
 
-        public ActionResult SearchProducts(string term)
+        public ActionResult SearchProducts(string termName, int price)
         {
-            return View(shopService.SearchProducts(term));
+            return View(shopService.SearchProducts(termName, price));
         }
 
         public ActionResult Error()
