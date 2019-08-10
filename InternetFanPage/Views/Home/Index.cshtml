@@ -38,4 +38,99 @@
         </div>
 
     </div>
+   
 </div>
+
+<div>
+    <canvas id="ariScreenSaver" class="dvd-canvas"></canvas>
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+    // Adjust the function to the browser
+    window.requestAnimFrame =
+        window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(callback, 1000 / 30);
+        };
+    var baseImage = "../Content/images/icon.jpg", imgW = 80, imgH = 67;
+
+    // Get the canvas HTML DOM object
+    var canvas = $("#ariScreenSaver")[0];
+
+    // Canvas context - on wich we will draw
+    var ctx = canvas.getContext('2d');
+    var canvasW = canvas.width, canvasH = canvas.height;
+
+    // Set the object initial location:
+    //  Math.floor will return the largest integer less than or equal to a given number
+    //  Math.random will return floating number between 0-1 (inclusive 0 but not 1)
+    var imgX = Math.floor(Math.random() * (canvasW - imgW));
+    var imgY = Math.floor(Math.random() * (canvasH - imgH));
+    var moveX, moveY = 1;
+
+    // Initial direction for the object movement
+    var xDir = "right",
+        yDir = "up";
+
+    var init = function () {
+        // File the rect with background color -
+        // so the object redraw on clean background and won't be redraw over and over again
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvasW, canvasH);
+        ctx.drawImage(base_image, imgX, imgY, imgW, imgH);
+
+        if (xDir == "right") {
+            if (imgX >= canvasW - imgW) {
+                xDir = "left";
+                imgX = imgX - moveX;
+            } else {
+                imgX = imgX + moveX;
+            }
+        } else {
+            if (imgX <= 0) {
+                xDir = "right";
+                imgX = imgX + moveX;
+            } else {
+                imgX = imgX - moveX;
+            }
+        }
+        if (yDir == "down") {
+            if (imgY >= canvasH - imgH) {
+                yDir = "up";
+                imgY = imgY - moveY;
+            } else {
+                imgY = imgY + moveY;
+            }
+        } else {
+            if (imgY <= 0) {
+                yDir = "down";
+                imgY = imgY + moveY;
+            } else {
+                imgY = imgY - moveY;
+            }
+        }
+
+        requestAnimFrame(init);
+    }
+
+    // In case the canvas size was changed
+    var reinit = function () {
+        canvasW = canvas.width, canvasH = canvas.height;
+        // Making sure the object won't go the same path
+        (canvasW - imgW === canvasH - imgH) ? moveX = 1.5 : moveX = 1;
+    }
+    reinit();
+
+    var base_image = new Image();
+    base_image.src = baseImage;
+    base_image.onload = function () {
+        window.addEventListener("resize", reinit);
+        init();
+    };
+</script>

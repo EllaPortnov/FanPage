@@ -10,15 +10,27 @@ namespace InternetFanPage.Controllers
         private FanPageContext ct = new FanPageContext();
         ShopService shopService = new ShopService();
         ProductsPageModel model = new ProductsPageModel();
+        ConcertsService concertService = new ConcertsService();
 
         public ActionResult Index()
         {
             return View();
         }
        
-        public ActionResult Concerts()
+        public ActionResult Concerts(string searchTermName, int? searchTermPrice)
         {
-            return View(ct.Concerts.AsEnumerable());
+            //var model = null;
+            
+            if (searchTermName == null && searchTermPrice == null)
+            {
+                return View(ct.Concerts.AsEnumerable());
+            }
+            else
+            {
+                 var model = concertService.searchConcert(searchTermName ?? string.Empty, searchTermPrice);
+                 return View(model);
+            }
+
         }
 
         public ActionResult Manager()
@@ -46,8 +58,12 @@ namespace InternetFanPage.Controllers
 
         //    return View(model);
         //}
+        public ActionResult UserProducts()
+        {
+            return View();
+        }
 
-        public ActionResult Products(string searchTerm, int categoryId = -1)
+        public ActionResult Products(string searchTermName,  int? searchTermPrice,  int categoryId = -1)
         {
             //LoadUserData();
             if (Session["UserID"] != null)
@@ -63,7 +79,7 @@ namespace InternetFanPage.Controllers
             }
             else
             {
-                model.Products = shopService.SearchProducts(searchTerm ?? string.Empty);
+                model.Products = shopService.SearchProducts(searchTermName ?? string.Empty, searchTermPrice);
             }
 
             if (model.Categories == null)
@@ -75,9 +91,9 @@ namespace InternetFanPage.Controllers
         }
 
 
-        public ActionResult SearchProducts(string term)
+        public ActionResult SearchProducts(string termName, int price)
         {
-            return View(shopService.SearchProducts(term));
+            return View(shopService.SearchProducts(termName, price));
         }
 
         public ActionResult Error()
@@ -109,6 +125,29 @@ namespace InternetFanPage.Controllers
         public ActionResult UpdateProduct(Product product)
         {
             return Json(shopService.UpdateProduct(product));
+        }
+        [HttpPost]
+        public ActionResult AddProduct(Product product)
+        {
+            return Json(shopService.AddProduct(product));
+        }
+        [HttpPost]
+        public ActionResult UpdateConsert(Concert concert)
+        {
+            return Json(shopService.UpdateConcert(concert));
+        }
+        [HttpPost]
+        public ActionResult UpdateInventory(Inventory inventory)
+        {
+            return Json(shopService.UpdateInventory(inventory));
+        }
+        [HttpDelete]
+        public ActionResult DeleteConcert(int id)
+        {
+            if (shopService.DeleteConcert(id))
+                return Json(id);
+            else
+                return Json(false);
         }
     }
 }

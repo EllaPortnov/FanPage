@@ -50,11 +50,15 @@
                         <li>@Html.ActionLink("Shop", "Products", "Home")</li>
                         <li>@Html.ActionLink("Tour", "Concerts", "Home")</li>
 
-                    @if (Session["IsAdmin"]!=null && (bool)Session["IsAdmin"])
-                    {
-                        <li>@Html.ActionLink("Manage", "Manager", "Home")</li>
-                    }
-                        </ul>
+                        @if (Session["User"] != null)
+                        {
+                            <li>@Html.ActionLink("My Shopping", "UserProducts", "Home")</li>
+                        }
+                        @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
+                        {
+                            <li>@Html.ActionLink("Manage", "Manager", "Home")</li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
@@ -73,7 +77,6 @@
 
                 <div class="login-help">
                     <a href="#" id="registerBtn">Register</a> -
-                    <a href="#">Forgot Password</a>
                 </div>
             </div>
         </div>
@@ -121,15 +124,6 @@
     <script>
         jQuery(function ($) {
 
-            // TO DELETE // 
-
-            //$.ajax({
-            //    url: '/Shop/RecommendProducts',
-            //    method: 'POST'
-            //});
-
-            // TO DELETE //
-
             // Login
             $("#loginBtn").click(function (e) {
                 $('#loginModal').modal();
@@ -161,7 +155,7 @@
                                 alert('incorrect user/password');
                                 return;
                             }
-                            location.reload()
+                            location.href = '/home';
                         })
                         .fail(function () {
                             console.log("login failed");
@@ -210,7 +204,7 @@
 
                 e.preventDefault();
             })
-            
+
             function validateInputs(parent) {
                 var isValid = true;
 
@@ -221,7 +215,7 @@
             $('#logoutBtn').click(function (e) {
                 $.ajax('/Users/Logout')
                     .done(function (result) {
-                        location.reload()
+                        location.href = '/home';
                     })
                     .fail(function () {
                         console.log("logout failed");

@@ -48,10 +48,10 @@ namespace InternetFanPage.Services
             {
 
                 return context.Sales.Join(context.Products, s => s.ProductID, p => p.ProductID, (sale, product) => new
-                    {
-                        Product = product,
-                        Sale = sale
-                    })
+                {
+                    Product = product,
+                    Sale = sale
+                })
                     .GroupBy(x => x.Product.CategoryID)
                     .Select(x => new SalesCategory()
                     {
@@ -68,7 +68,7 @@ namespace InternetFanPage.Services
             {
                 return context.Categories.Where(c => c.CategoryID == key).FirstOrDefault().Name;
             }
-                
+
         }
 
         public IList<Category> GetAllAndNullCategories()
@@ -79,21 +79,33 @@ namespace InternetFanPage.Services
             }
         }
 
-        public IList<Product> SearchProducts(string term)
+        public IList<Product> SearchProducts(string term, int? price)
         {
+
             using (var context = new FanPageContext())
             {
-                return context.Products.Where(p => p.Name.Contains(term) || p.Description.Contains(term)).ToList();
+                if (price != null)
+                {
+                    return context.Products
+                        .Where(p => (p.Name.Contains(term) || p.Description.Contains(term)) && p.Price <= price).ToList();
+                }
+                else
+                    return context.Products
+                        .Where(p => p.Name.Contains(term) || p.Description.Contains(term)).ToList();
             }
+
+
         }
 
-        public bool CreateProduct(Product product)
+        public bool DeleteConcert(int id)
         {
             using (var context = new FanPageContext())
             {
+                var targetConcert = context.Concerts.Where(c => c.ConcertID == id).FirstOrDefault();
+                context.Concerts.Remove(targetConcert);
+
                 try
                 {
-                    context.Products.Add(product);
                     context.SaveChanges();
                 }
                 catch (Exception)
@@ -105,11 +117,76 @@ namespace InternetFanPage.Services
             }
         }
 
+        public bool UpdateInventory(Inventory inventory)
+        {
+            using (var context = new FanPageContext())
+            {
+                try
+                {
+                    context.Inventory.Add(inventory);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public Product AddProduct(Product pProduct)
+        {
+            using (var context = new FanPageContext())
+            {
+                Product newProd;
+                try
+                {
+                    pProduct.SupplierID = 2;
+                    context.Products.Add(pProduct);
+                    context.SaveChanges();
+                    newProd = context.Products.Where(p => p == pProduct).FirstOrDefault();
+                    //Inventory newProdInventory = new Inventory()
+                    //{
+                    //    ProductID = newProd.ProductID,
+                    //    Quantity = 100
+                    //};
+                    //context.Inventory.Add(newProdInventory);
+                    //context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+
+                return newProd;
+            }
+        }
+
+        public object UpdateConcert(Concert concert)
+        {
+            using (var context = new FanPageContext())
+            {
+                var targetConcert = context.Concerts.Where(c => c.ConcertID == concert.ConcertID).FirstOrDefault();
+                targetConcert.Price = concert.Price;
+                try
+                {
+                    context.Concerts.Update(targetConcert);
+                    context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
         public bool BuyProduct(int UserId, int id)
         {
             using (var context = new FanPageContext())
             {
-                
+
                 var targetInventory = context.Inventory.Where(p => p.ProductID == id).FirstOrDefault();
                 if (targetInventory is null)
                 {
@@ -120,7 +197,7 @@ namespace InternetFanPage.Services
                 Sale saleToAdd = new Sale()
                 {
                     ProductID = id,
-                    UserID = UserId             
+                    UserID = UserId
                 };
 
                 try
@@ -287,6 +364,20 @@ namespace InternetFanPage.Services
             }
 
             return recommededProducts;
+        }
+          
+        public IList<ProductResult> getUserProducts(int UserId)
+        {
+            IList<ProductResult> listToReturn = new List<ProductResult>();
+            using (var context = new FanPageContext())
+            {
+                var sales = context.Sales.Where(u => u.UserID == UserId);
+                foreach (var sale in sales)
+                {
+                    listToReturn.Add(GetProduct(sale.ProductID));
+                }
+            }
+            return listToReturn;
         }
     }
 }
