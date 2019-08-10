@@ -225,7 +225,10 @@ namespace InternetFanPage.Services
 
         public IList<Sale> GetAllSales()
         {
-            return null;
+            using (var ctx = new FanPageContext())
+            {
+                return ctx.Sales.ToList();
+            }
         }
     }
 }
