@@ -52,7 +52,7 @@ namespace InternetFanPage.Controllers
             //LoadUserData();
             if (Session["UserID"] != null)
             {
-                int userId = int.Parse(Session["UserID"].ToString());
+                int userId = (int)Session["UserID"];
 
                 model.Rcommended = shopService.RecommendProducts(userId);
             }
