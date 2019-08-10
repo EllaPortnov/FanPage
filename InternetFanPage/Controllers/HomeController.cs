@@ -28,6 +28,13 @@ namespace InternetFanPage.Controllers
 
         public ActionResult Shop()
         {
+            if (Session["UserID"] != null)
+            {
+                int userId = int.Parse(Session["UserID"].ToString());
+
+                return View(shopService.RecommendProducts(userId));
+            }
+
             return View();
         }
 
