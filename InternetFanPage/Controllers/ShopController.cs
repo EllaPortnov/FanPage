@@ -86,10 +86,12 @@ namespace InternetFanPage.Controllers
             //    new SortedSet<int> { 2, 4 },
             //};
 
-            using (var ctx = new FanPageContext())
-            {
-                // GroupBy to get all of the sales of the same user
-            }
+            var salesByUser = shopService.GetAllSalesByUser();
+
+            //using (var ctx = new FanPageContext())
+            //{
+            //    // GroupBy to get all of the sales of the same user
+            //}
 
             // We will use Apriori to determine the frequent item sets of this database.
             // To do this, we will say that an item set is frequent if it appears in at 
