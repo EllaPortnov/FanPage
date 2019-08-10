@@ -349,6 +349,7 @@
     <Compile Include="Models\TweetPost.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ConcertsService.cs" />
     <Compile Include="Services\ShopService.cs" />
     <Compile Include="Services\TweetService.cs" />
     <Compile Include="Services\UserServices.cs" />
