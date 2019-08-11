@@ -18,9 +18,14 @@ namespace InternetFanPage.Services
                     cons = cons.Where(p => (p.City.Contains(name)) && p.Price <= price);
                 }
 
-                if (searchTermDateStart != null && searchTermDateEnd != null)
+                if (searchTermDateStart != null)
                 {
-                    cons = cons.Where(p => Convert.ToDateTime(p.Date).Date >= searchTermDateStart && Convert.ToDateTime(p.Date).Date <= searchTermDateEnd);
+                    cons = cons.Where(p => Convert.ToDateTime(p.Date).Date >= searchTermDateStart);
+                }
+
+                if (searchTermDateEnd != null)
+                {
+                    cons = cons.Where(p => Convert.ToDateTime(p.Date).Date <= searchTermDateEnd);
                 }
 
                 return cons.ToList();
