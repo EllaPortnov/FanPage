@@ -108,6 +108,7 @@ video {
 .Stories {
     font-size: 20px;
     border: solid;
+    border-width: 2px;
     padding: 10px;
     border-color: black;
     border-radius: 4px;
