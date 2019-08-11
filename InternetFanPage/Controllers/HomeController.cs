@@ -74,14 +74,18 @@ namespace InternetFanPage.Controllers
                 model.Recommended = shopService.RecommendProducts(userId);
             }
 
-            if (categoryId > 0)
-            {
-                model.Products = shopService.GetProductsByCategory(categoryId);
-            }
-            else
-            {
-                model.Products = shopService.SearchProducts(searchTermName ?? string.Empty, searchTermPrice);
-            }
+            //if (categoryId > 0)
+            //{
+            //    model.Products = shopService.GetProductsByCategory(categoryId);
+            //}
+            //if (categoryId < 0)
+            //{
+            //    model.Products = shopService.SearchProducts(searchTermName ?? string.Empty, searchTermPrice);
+            //}
+            //else
+            //{
+            model.Products = shopService.SearchProducts(searchTermName ?? string.Empty, searchTermPrice, categoryId);
+            //}
 
             if (model.Categories == null)
             {

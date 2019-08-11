@@ -97,6 +97,26 @@ namespace InternetFanPage.Services
 
         }
 
+        public IList<Product> SearchProducts(string term, int? price, int categoryId)
+        {
+            using (var context = new FanPageContext())
+            {
+                var products = context.Products.Where(p => (p.Name.ToLower().Contains(term.ToLower()) || p.Description.ToLower().Contains(term.ToLower())));
+
+                if (price != null)
+                {
+                    products = products.Where(p => p.Price <= price);
+                }
+
+                if (categoryId > 0)
+                {
+                    products = products.Where(p => p.CategoryID == categoryId);
+                }
+
+                return products.ToList();
+            }
+        }
+
         public bool DeleteConcert(int id)
         {
             using (var context = new FanPageContext())
