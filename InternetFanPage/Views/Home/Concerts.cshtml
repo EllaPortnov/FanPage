@@ -85,6 +85,10 @@
 <script type='text/javascript'>
     $(document).ready(function () {
         $('.datepicker').datepicker();
+
+        $('#cb-x-card').click(function () {
+            $('#concert-details').hide();
+        });
     });
 
     function weather(lat, lon) {
