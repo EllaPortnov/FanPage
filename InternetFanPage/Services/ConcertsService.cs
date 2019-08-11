@@ -11,7 +11,7 @@ namespace InternetFanPage.Services
         {
             using (var context = new FanPageContext())
             {
-                IQueryable<Concert> cons = context.Concerts.Where(p => p.City.Contains(name));
+                IQueryable<Concert> cons = context.Concerts.Where(p => p.City.ToLower().Contains(name.ToLower()));
 
                 if (price != null)
                 {
