@@ -1,4 +1,4 @@
-﻿@model InternetFanPage.Models.ProductsPageModel
+@model InternetFanPage.Models.ProductsPageModel
 
 @{
     ViewData["Title"] = "Shop";
@@ -335,7 +335,9 @@
                     }).done(function (e) {
 
                         });
-                    alert('save success!');
+                    
+                  
+                $('#modal-success').modal();
                     var productEl = $('.card[product-id=' + product.productID + ']');
                     productEl.find('.card-title').html(product.productName);
                     productEl.find('.card-text').html(product.description);
@@ -354,10 +356,11 @@
             var productId = $(this).parents('#productModal').attr('product-id');
 
             var file = document.querySelector('#imageFile').files[0];
-            var productImage = file.name;
-            if (productImage == null) {
+            if (file == null) {
                 productImage = "";
             }
+            else
+                productImage = file.name;
                 $.ajax({
                     url: '/Home/UpdateProduct',
                     method: 'POST',
@@ -371,7 +374,7 @@
                     }
 
                 }).done(function (product) {
-                    alert('save success!');
+                $('#modal-success').modal();
                     var productEl = $('.card[product-id=' + product.productID + ']');
                     productEl.find('.card-title').html(product.productName);
                     productEl.find('.card-text').html(product.description);
