@@ -1,46 +1,25 @@
-﻿@model InternetFanPage.Models.ProductsPageModel
+@model InternetFanPage.Models.ProductsPageModel
+
 @{
     ViewData["Title"] = "Shop";
 }
+
 <div class="page-wrapper chiller-theme toggled">
-    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-        <i class="fas fa-bars"></i>
-    </a>
-    <aside id="sidebar" class="sidebar-wrapper">
-        <div class="sidebar-content">
-            <div class="sidebar-brand">
-                <a href="#">Categories</a>
-                <div id="close-sidebar">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="sidebar-menu">
-                <ul>
-                    <li>
-                        <a href="/Home/Products">
-                            <span>All</span>
-                        </a>
-                    </li>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <li>
-                            <a href="/Home/Products?categoryId=@category.CategoryID">
-                                <span>@category.Name.ToString() (@category.Count)</span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <!-- sidebar-menu  -->
-        </div>
-    </aside>
-    <!-- sidebar-wrapper  -->
     <main class="page-content">
         <section class="container-fluid">
             <form asp-controller="Home" asp-action="Products" class="form-inline search-form">
                 <div class="form-group">
                     <input class="form-control" type="text" name="SearchTermName" placeholder="Search by name" aria-label="SearchName" style="width:250px">
                     <input class="form-control" type="number" name="SearchTermPrice" placeholder="filter by max price" aria-label="SearchPrice" style="width:160px">
+
+                    <select class="form-control" name="CategoryId" aria-label="CategoryId">
+                        <option value="">Choose category</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.CategoryID">@category.Name</option>
+                        }
+                    </select>
+
                     <input type="submit" class="btn btn-primary" value="Filter" />
                     <a id="filterClear" class="btn btn-danger" href="/Home/Products">Clear</a>
                 </div>
@@ -61,14 +40,24 @@
                                     <h5 class="card-title">@rec.Name</h5>
                                     <p class="card-text">@rec.Description</p>
                                     <a href="#" class="btn btn-primary view-product-btn">Details</a>
+
                                 </div>
                             </div>
                         </div>
                     }
                 }
+
             </div>
             <hr />
             <br />
+
+
+
+            @if (Model.Recommended == null && Model.Products.Count() == 0)
+            {
+                <h4>No results for this filter..</h4>
+            }
+
             <div class="products">
                 @foreach (var product in Model.Products)
                 {
@@ -90,6 +79,7 @@
                                     <h5 class="card-title">@product.Name</h5>
                                     <p class="card-text">@product.Description</p>
                                     <a href="#" class="btn btn-primary view-product-btn">Details</a>
+
                                 </div>
                             </div>
                         </div>
@@ -143,6 +133,10 @@
                                         {
                                             <a href="#" style="visibility:visible" id="buy-product-btn" class="btn btn-primary buy-product-btn">Buy</a>
                                         }
+                                        else
+                                        {
+                                            <h5 style="color: red;">* You have to login to purchase..</h5>
+                                        }
                                         @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
                                         {
                                             <button type="button" class="btn btn-default btn-sm" id="editBtn">
@@ -168,30 +162,36 @@
         </section>
         <input type="hidden" id="session" data-value="@Session["UserID"]" />
 
+
+
         <div id="modal-success" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="icon-box">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body text-center">
                         <h4>Great!</h4>
-                        <p>הפעולה הושלמה בהצלחה</p>
+                        <p>Your purchase finished successfully.</p>
                     </div>
                 </div>
             </div>
         </div>
+
     </main>
     <!-- page-content" -->
 </div>
 <link rel="stylesheet" href="~/css/sidebar.css" />
 <link rel="stylesheet" href="~/css/products.css" />
 
+
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
+
 <!-- page-wrapper -->
 <script>
     jQuery(function ($) {
@@ -310,43 +310,45 @@
             }
             else
                 productImage = file.name;
-            $.ajax({
-                url: '/Home/AddProduct',
-                method: 'POST',
-                data: {
-                    Price: $('#product-price-input').val(),
-                    Description: $('#product-description-input').val(),
-                    CategoryID: $('#product-category-input').val(),
-                    Name: $('#product-name-input').val(),
-                    ProductID: "",
-                    Image: productImage
-                }
-
-            }).done(function (product) {
-
                 $.ajax({
-                    url: '/Home/UpdateInventory',
+                    url: '/Home/AddProduct',
                     method: 'POST',
                     data: {
-                        ProductID: product.ProductID,
-                        Quantity: $('#product-in-stock-input').val(),
+                        Price: $('#product-price-input').val(),
+                        Description: $('#product-description-input').val(),
+                        CategoryID: $('#product-category-input').val(),
+                        Name: $('#product-name-input').val(),
+                        ProductID: "",
+                        Image: productImage
                     }
 
-                }).done(function (e) {
+                }).done(function (product) {
+                    
+                    $.ajax({
+                        url: '/Home/UpdateInventory',
+                        method: 'POST',
+                        data: {
+                            ProductID: product.ProductID,
+                            Quantity: $('#product-in-stock-input').val(),
+                        }
 
-                });
+                    }).done(function (e) {
+
+                        });
+                    
+                  
                 $('#modal-success').modal();
-                var productEl = $('.card[product-id=' + product.productID + ']');
-                productEl.find('.card-title').html(product.productName);
-                productEl.find('.card-text').html(product.description);
-                if (product.image)
-                    productEl.find('.card-img-top').attr('src', product.image);
-                $('#productModal').modal("hide");
+                    var productEl = $('.card[product-id=' + product.productID + ']');
+                    productEl.find('.card-title').html(product.productName);
+                    productEl.find('.card-text').html(product.description);
+                    if (product.image)
+                        productEl.find('.card-img-top').attr('src', product.image);
+                    $('#productModal').modal("hide");
 
-            })
-                .fail(function (error) {
-                    alert('failed to save product. check image file size')
                 })
+                    .fail(function (error) {
+                        alert('failed to save product. check image file size')
+                    })
 
             e.preventDefault();
         })
@@ -359,31 +361,31 @@
             }
             else
                 productImage = file.name;
-            $.ajax({
-                url: '/Home/UpdateProduct',
-                method: 'POST',
-                data: {
-                    Price: $('#product-price-input').val(),
-                    Description: $('#product-description-input').val(),
-                    CategoryID: $('#product-category-input').val(),
-                    Name: $('#product-name-input').val(),
-                    ProductID: productId,
-                    Image: productImage
-                }
+                $.ajax({
+                    url: '/Home/UpdateProduct',
+                    method: 'POST',
+                    data: {
+                        Price: $('#product-price-input').val(),
+                        Description: $('#product-description-input').val(),
+                        CategoryID: $('#product-category-input').val(),
+                        Name: $('#product-name-input').val(),
+                        ProductID: productId,
+                        Image: productImage
+                    }
 
-            }).done(function (product) {
+                }).done(function (product) {
                 $('#modal-success').modal();
-                var productEl = $('.card[product-id=' + product.productID + ']');
-                productEl.find('.card-title').html(product.productName);
-                productEl.find('.card-text').html(product.description);
-                if (product.image)
-                    productEl.find('.card-img-top').attr('src', product.image);
-                $('#productModal').modal("hide");
+                    var productEl = $('.card[product-id=' + product.productID + ']');
+                    productEl.find('.card-title').html(product.productName);
+                    productEl.find('.card-text').html(product.description);
+                    if (product.image)
+                        productEl.find('.card-img-top').attr('src', product.image);
+                    $('#productModal').modal("hide");
 
-            })
-                .fail(function (error) {
-                    alert('failed to save product. check image file size')
                 })
+                    .fail(function (error) {
+                        alert('failed to save product. check image file size')
+                    })
 
             e.preventDefault();
         })
