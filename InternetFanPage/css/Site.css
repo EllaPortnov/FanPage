@@ -192,6 +192,12 @@ video {
     font-size: 14px;
 }
 
+#recProducts {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    /* grid-column-gap: 50px; */
+}
 
 #products {
     display: grid;
