@@ -15,7 +15,7 @@ namespace InternetFanPage.Services
 
                 if (price != null)
                 {
-                    cons = cons.Where(p => (p.City.Contains(name)) && p.Price <= price);
+                    cons = cons.Where(p => p.Price <= price);
                 }
 
                 if (searchTermDateStart != null)
