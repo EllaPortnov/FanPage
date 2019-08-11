@@ -24,7 +24,7 @@
                     <a id="filterClear" class="btn btn-danger" href="/Home/Products">Clear</a>
                 </div>
             </form>
-            
+
             <div class="products">
                 @if (Session["User"] != null)
                 {
@@ -50,6 +50,14 @@
             </div>
             <hr />
             <br />
+
+
+
+            @if (Model.Recommended == null && Model.Products.Count() == 0)
+            {
+                <h4>No results for this filter..</h4>
+            }
+
             <div class="products">
                 @foreach (var product in Model.Products)
                 {
@@ -58,35 +66,35 @@
                         Model.Recommended == null)
                     {
                         <!-- <div class="col-sm-4"> -->
-                    <div class="card" product-id="@product.ProductID">
-                        <div class="cardContainer">
-                            <img class="card-img-top" src="~/assets/@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
-                            <div class="card-body">
-                                @if (product.ProductID == Model.TopSale.ProductID)
-                                {
-                                    <span class="badge badge-error">
-                                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot!
-                                    </span>
-                                }
-                                <h5 class="card-title">@product.Name</h5>
-                                <p class="card-text">@product.Description</p>
-                                <a href="#" class="btn btn-primary view-product-btn">Details</a>
+                        <div class="card" product-id="@product.ProductID">
+                            <div class="cardContainer">
+                                <img class="card-img-top" src="~/assets/@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
+                                <div class="card-body">
+                                    @if (product.ProductID == Model.TopSale.ProductID)
+                                    {
+                                        <span class="badge badge-error">
+                                            <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot!
+                                        </span>
+                                    }
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">@product.Description</p>
+                                    <a href="#" class="btn btn-primary view-product-btn">Details</a>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
                     <!-- </div> -->
-                    }
-                    @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
-                    {
-                        <div id="add-product">
-                            <div class="card-body">
-                                <img class="card-img-top" src="~/Content/images/plus.png" style='display:block; width:150px;height:150px;'>
-                            </div>
+                }
+                @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
+                {
+                    <div id="add-product">
+                        <div class="card-body">
+                            <img class="card-img-top" src="~/Content/images/plus.png" style='display:block; width:150px;height:150px;'>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
+            </div>
             <!-- Modal -->
             <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
