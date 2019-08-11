@@ -133,6 +133,10 @@
                                         {
                                             <a href="#" style="visibility:visible" id="buy-product-btn" class="btn btn-primary buy-product-btn">Buy</a>
                                         }
+                                        else
+                                        {
+                                            <h5 style="color: red;">* You have to login to purchase..</h5>
+                                        }
                                         @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
                                         {
                                             <button type="button" class="btn btn-default btn-sm" id="editBtn">
