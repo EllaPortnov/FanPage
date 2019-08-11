@@ -1,9 +1,7 @@
 ﻿@model InternetFanPage.Models.ProductsPageModel
-
 @{
     ViewData["Title"] = "Shop";
 }
-
 <div class="page-wrapper chiller-theme toggled">
     <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars"></i>
@@ -22,7 +20,6 @@
                         <a href="/Home/Products">
                             <span>All</span>
                         </a>
-
                     </li>
                     @foreach (var category in Model.Categories)
                     {
@@ -30,7 +27,6 @@
                             <a href="/Home/Products?categoryId=@category.CategoryID">
                                 <span>@category.Name.ToString() (@category.Count)</span>
                             </a>
-
                         </li>
                     }
                 </ul>
@@ -49,7 +45,7 @@
                     <a id="filterClear" class="btn btn-danger" href="/Home/Products">Clear</a>
                 </div>
             </form>
-            
+
             <div class="products">
                 @if (Session["User"] != null)
                 {
@@ -65,13 +61,11 @@
                                     <h5 class="card-title">@rec.Name</h5>
                                     <p class="card-text">@rec.Description</p>
                                     <a href="#" class="btn btn-primary view-product-btn">Details</a>
-
                                 </div>
                             </div>
                         </div>
                     }
                 }
-
             </div>
             <hr />
             <br />
@@ -83,35 +77,34 @@
                         Model.Recommended == null)
                     {
                         <!-- <div class="col-sm-4"> -->
-                    <div class="card" product-id="@product.ProductID">
-                        <div class="cardContainer">
-                            <img class="card-img-top" src="~/assets/@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
-                            <div class="card-body">
-                                @if (product.ProductID == Model.TopSale.ProductID)
-                                {
-                                    <span class="badge badge-error">
-                                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot!
-                                    </span>
-                                }
-                                <h5 class="card-title">@product.Name</h5>
-                                <p class="card-text">@product.Description</p>
-                                <a href="#" class="btn btn-primary view-product-btn">Details</a>
-
+                        <div class="card" product-id="@product.ProductID">
+                            <div class="cardContainer">
+                                <img class="card-img-top" src="~/assets/@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
+                                <div class="card-body">
+                                    @if (product.ProductID == Model.TopSale.ProductID)
+                                    {
+                                        <span class="badge badge-error">
+                                            <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot!
+                                        </span>
+                                    }
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">@product.Description</p>
+                                    <a href="#" class="btn btn-primary view-product-btn">Details</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     }
                     <!-- </div> -->
-                    }
-                    @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
-                    {
-                        <div id="add-product">
-                            <div class="card-body">
-                                <img class="card-img-top" src="~/Content/images/plus.png" style='display:block; width:150px;height:150px;'>
-                            </div>
+                }
+                @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
+                {
+                    <div id="add-product">
+                        <div class="card-body">
+                            <img class="card-img-top" src="~/Content/images/plus.png" style='display:block; width:150px;height:150px;'>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
+            </div>
             <!-- Modal -->
             <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -175,36 +168,30 @@
         </section>
         <input type="hidden" id="session" data-value="@Session["UserID"]" />
 
-
-
         <div id="modal-success" class="modal fade">
             <div class="modal-dialog modal-confirm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="icon-box">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body text-center">
                         <h4>Great!</h4>
-                        <p>Your purchase finished successfully.</p>
+                        <p>הפעולה הושלמה בהצלחה</p>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
     <!-- page-content" -->
 </div>
 <link rel="stylesheet" href="~/css/sidebar.css" />
 <link rel="stylesheet" href="~/css/products.css" />
 
-
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
-
 <!-- page-wrapper -->
 <script>
     jQuery(function ($) {
@@ -323,43 +310,43 @@
             }
             else
                 productImage = file.name;
+            $.ajax({
+                url: '/Home/AddProduct',
+                method: 'POST',
+                data: {
+                    Price: $('#product-price-input').val(),
+                    Description: $('#product-description-input').val(),
+                    CategoryID: $('#product-category-input').val(),
+                    Name: $('#product-name-input').val(),
+                    ProductID: "",
+                    Image: productImage
+                }
+
+            }).done(function (product) {
+
                 $.ajax({
-                    url: '/Home/AddProduct',
+                    url: '/Home/UpdateInventory',
                     method: 'POST',
                     data: {
-                        Price: $('#product-price-input').val(),
-                        Description: $('#product-description-input').val(),
-                        CategoryID: $('#product-category-input').val(),
-                        Name: $('#product-name-input').val(),
-                        ProductID: "",
-                        Image: productImage
+                        ProductID: product.ProductID,
+                        Quantity: $('#product-in-stock-input').val(),
                     }
 
-                }).done(function (product) {
-                    
-                    $.ajax({
-                        url: '/Home/UpdateInventory',
-                        method: 'POST',
-                        data: {
-                            ProductID: product.ProductID,
-                            Quantity: $('#product-in-stock-input').val(),
-                        }
+                }).done(function (e) {
 
-                    }).done(function (e) {
+                });
+                $('#modal-success').modal();
+                var productEl = $('.card[product-id=' + product.productID + ']');
+                productEl.find('.card-title').html(product.productName);
+                productEl.find('.card-text').html(product.description);
+                if (product.image)
+                    productEl.find('.card-img-top').attr('src', product.image);
+                $('#productModal').modal("hide");
 
-                        });
-                    alert('save success!');
-                    var productEl = $('.card[product-id=' + product.productID + ']');
-                    productEl.find('.card-title').html(product.productName);
-                    productEl.find('.card-text').html(product.description);
-                    if (product.image)
-                        productEl.find('.card-img-top').attr('src', product.image);
-                    $('#productModal').modal("hide");
-
+            })
+                .fail(function (error) {
+                    alert('failed to save product. check image file size')
                 })
-                    .fail(function (error) {
-                        alert('failed to save product. check image file size')
-                    })
 
             e.preventDefault();
         })
@@ -367,35 +354,36 @@
             var productId = $(this).parents('#productModal').attr('product-id');
 
             var file = document.querySelector('#imageFile').files[0];
-            var productImage = file.name;
-            if (productImage == null) {
+            if (file == null) {
                 productImage = "";
             }
-                $.ajax({
-                    url: '/Home/UpdateProduct',
-                    method: 'POST',
-                    data: {
-                        Price: $('#product-price-input').val(),
-                        Description: $('#product-description-input').val(),
-                        CategoryID: $('#product-category-input').val(),
-                        Name: $('#product-name-input').val(),
-                        ProductID: productId,
-                        Image: productImage
-                    }
+            else
+                productImage = file.name;
+            $.ajax({
+                url: '/Home/UpdateProduct',
+                method: 'POST',
+                data: {
+                    Price: $('#product-price-input').val(),
+                    Description: $('#product-description-input').val(),
+                    CategoryID: $('#product-category-input').val(),
+                    Name: $('#product-name-input').val(),
+                    ProductID: productId,
+                    Image: productImage
+                }
 
-                }).done(function (product) {
-                    alert('save success!');
-                    var productEl = $('.card[product-id=' + product.productID + ']');
-                    productEl.find('.card-title').html(product.productName);
-                    productEl.find('.card-text').html(product.description);
-                    if (product.image)
-                        productEl.find('.card-img-top').attr('src', product.image);
-                    $('#productModal').modal("hide");
+            }).done(function (product) {
+                $('#modal-success').modal();
+                var productEl = $('.card[product-id=' + product.productID + ']');
+                productEl.find('.card-title').html(product.productName);
+                productEl.find('.card-text').html(product.description);
+                if (product.image)
+                    productEl.find('.card-img-top').attr('src', product.image);
+                $('#productModal').modal("hide");
 
+            })
+                .fail(function (error) {
+                    alert('failed to save product. check image file size')
                 })
-                    .fail(function (error) {
-                        alert('failed to save product. check image file size')
-                    })
 
             e.preventDefault();
         })
