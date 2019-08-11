@@ -20,6 +20,8 @@ namespace InternetFanPage.Models
         
         public IEnumerable<ProductResult> Recommended { get; set; }
 
+        public ProductResult TopSale { get; set; }
+
         public ProductsPageModel()
         {
         }

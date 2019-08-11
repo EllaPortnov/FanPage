@@ -379,5 +379,15 @@ namespace InternetFanPage.Services
             }
             return listToReturn;
         }
+
+        public ProductResult getTopSaleProduct()
+        {
+            var sales = this.GetAllSales();
+
+            var grouped = sales.GroupBy(s => s.ProductID, (key, g) => new { ProductID = key, Count = g.Count() });
+            grouped = grouped.OrderByDescending(s => s.Count);
+
+            return this.GetProduct(grouped.First().ProductID);
+        }
     }
 }

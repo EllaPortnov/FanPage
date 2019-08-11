@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using InternetFanPage.Services;
+using System;
 
 namespace InternetFanPage.Controllers
 {
@@ -17,17 +18,17 @@ namespace InternetFanPage.Controllers
             return View();
         }
        
-        public ActionResult Concerts(string searchTermName, int? searchTermPrice)
+        public ActionResult Concerts(string searchTermName, int? searchTermPrice, DateTime? searchTermDateStart, DateTime? searchTermDateEnd)
         {
             //var model = null;
             
-            if (searchTermName == null && searchTermPrice == null)
+            if (searchTermName == null && searchTermPrice == null && searchTermDateStart == null && searchTermDateEnd == null)
             {
                 return View(ct.Concerts.AsEnumerable());
             }
             else
             {
-                 var model = concertService.searchConcert(searchTermName ?? string.Empty, searchTermPrice);
+                 var model = concertService.searchConcert(searchTermName ?? string.Empty, searchTermPrice, searchTermDateStart, searchTermDateEnd);
                  return View(model);
             }
 
@@ -86,6 +87,8 @@ namespace InternetFanPage.Controllers
             {
                 model.Categories = shopService.GetAllCategories();
             }
+
+            model.TopSale = shopService.getTopSaleProduct();
 
             return View(model);
         }

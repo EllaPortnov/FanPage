@@ -9,15 +9,19 @@
 <form asp-controller="Home" asp-action="Concerts" class="form-inline search-form">
     <h2>Upcoming Concerts</h2>
 
-    <div class="form-group">
+    <div class="form-group md-form">
         <input class="form-control" type="text" name="SearchTermName" placeholder="Search by city" aria-label="SearchName" style="width:250px">
-        <input class="form-control" type="number" name="SearchTermPrice" placeholder="filter by max price" aria-label="SearchPrice" style="width:160px">
-        <input type="submit" class="btn btn-default" value="Filter" />
+        <input class="form-control" type="number" name="SearchTermPrice" placeholder="Filter by max price" aria-label="SearchPrice" style="width:160px">
+        <input id="filterDateStart" class="datepicker form-control" type="datetime" name="SearchTermDateStart" placeholder="Start date" aria-label="SearchDateStart">
+        <input id="filterDateEnd" class="datepicker form-control" type="datetime" name="SearchTermDateEnd" placeholder="End date" aria-label="SearchDateEnd">
+        <input id="filterButton" type="submit" class="btn btn-primary" value="Filter" />
+        <a id="filterClear" class="btn btn-danger" href="/Home/Concerts">Clear</a>
     </div>
 </form>
+
 <div class="row">
     <div class="col-sm-3">
-        
+
         <ul class="list-group">
             <li type="button" class="list-group-item concert-list-title">
                 City Name
@@ -35,8 +39,8 @@
             <li type="button" class="list-group-item current-concert" id="cb">
                 <div class="cb-card-title">
                     <svg id="cb-x-card" class="cb-x-card">
-                        <path fill="none" d="M0 0h24v24H0V0z"/>
-                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                        <path fill="none" d="M0 0h24v24H0V0z" />
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
                     </svg>
                     <h4 id="cbCity"></h4>
                 </div>
@@ -56,7 +60,7 @@
                 <div id="cbForcast">
                     <div class="loader"></div>
                 </div>
-                @if (Session["IsAdmin"] != null && (bool) Session["IsAdmin"])
+                @if (Session["IsAdmin"] != null && (bool)Session["IsAdmin"])
                 {
                     <button type="button" class="btn btn-default btn-sm" id="editBtn">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
@@ -79,9 +83,15 @@
     </div>
 </div>
 
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
 <script type='text/javascript'>
+    $(document).ready(function () {
+        $('.datepicker').datepicker();
+
+        $('#cb-x-card').click(function () {
+            $('#concert-details').hide();
+        });
+    });
+
     function weather(lat, lon) {
         var api_url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
             lat + '&lon=' +
@@ -128,7 +138,7 @@
     }
 
 
-   
+
     // When the user closes the card the map zooms out
     // unmark the currect concert list item
     function infoboxClosed() {
@@ -179,14 +189,14 @@
         var price = $('#cbPrice').text();
         var input = "<input id='cbPrice-input' type='text' class='form-control' value=\"" + price + "\">";
         $('#cbPrice').html(input);
-    
+
             $('#editBtn').css('display', 'none');
             $('#saveBtn').css('display', 'inline-block');
-       
+
         e.preventDefault();
     })
 
-    
+
     $('#saveBtn').click(function (e) {
         var ConcertId = clickedConcert.attr('id');
         var Price = $('#cbPrice-input').val();
@@ -228,4 +238,8 @@
     });
 
 </script>
+
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario' async defer></script>
+<!-- Include Bootstrap Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
