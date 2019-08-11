@@ -57,7 +57,7 @@
                         <div class="card" product-id="@rec.ProductID">
                             <img class="card-img-top" src="~/assets/@rec.Image" alt="@rec.Name" style='display:block; width:150px;height:150px;'>
                             <div class="card-body">
-                                <span class="badge">
+                                <span class="badge badge-success">
                                     <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> Recommended for you
                                 </span>
                                 <h5 class="card-title">@rec.Name</h5>
@@ -82,9 +82,12 @@
                         <div class="card" product-id="@product.ProductID">
                             <img class="card-img-top" src="~/assets/@product.Image" alt="@product.Name" style='display:block; width:150px;height:150px;'>
                             <div class="card-body">
-                                @*<span class="badge">
-                                    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot!
-                                </span>*@
+                                @if (product.ProductID == Model.TopSale.ProductID)
+                                {
+                                    <span class="badge badge-error">
+                                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span> Hot!
+                                    </span>
+                                }
                                 <h5 class="card-title">@product.Name</h5>
                                 <p class="card-text">@product.Description</p>
                                 <a href="#" class="btn btn-primary view-product-btn">Details</a>

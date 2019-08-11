@@ -88,6 +88,8 @@ namespace InternetFanPage.Controllers
                 model.Categories = shopService.GetAllCategories();
             }
 
+            model.TopSale = shopService.getTopSaleProduct();
+
             return View(model);
         }
 

@@ -237,3 +237,19 @@ video {
 .view-product-btn {
     margin-left: 40px;
 }
+
+.badge-error {
+    background-color: #b94a48;
+}
+
+.badge-error:hover {
+    background-color: #953b39;
+}
+
+.badge-success {
+    background-color: #468847;
+}
+
+.badge-success:hover {
+    background-color: #356635;
+}
