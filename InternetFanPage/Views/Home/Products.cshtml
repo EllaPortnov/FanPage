@@ -5,40 +5,6 @@
 }
 
 <div class="page-wrapper chiller-theme toggled">
-    <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-        <i class="fas fa-bars"></i>
-    </a>
-    <aside id="sidebar" class="sidebar-wrapper">
-        <div class="sidebar-content">
-            <div class="sidebar-brand">
-                <a href="#">Categories</a>
-                <div id="close-sidebar">
-                    <i class="fas fa-times"></i>
-                </div>
-            </div>
-            <div class="sidebar-menu">
-                <ul>
-                    <li>
-                        <a href="/Home/Products">
-                            <span>All</span>
-                        </a>
-
-                    </li>
-                    @foreach (var category in Model.Categories)
-                    {
-                        <li>
-                            <a href="/Home/Products?categoryId=@category.CategoryID">
-                                <span>@category.Name.ToString() (@category.Count)</span>
-                            </a>
-
-                        </li>
-                    }
-                </ul>
-            </div>
-            <!-- sidebar-menu  -->
-        </div>
-    </aside>
-    <!-- sidebar-wrapper  -->
     <main class="page-content">
         <section class="container-fluid">
             <form asp-controller="Home" asp-action="Products" class="form-inline search-form">
