@@ -231,7 +231,7 @@ video {
 
 .search-form {
     margin-bottom: 40px;
-    margin-left: 400px;
+    margin-left: 0px;
 }
 
 .view-product-btn {
@@ -252,4 +252,21 @@ video {
 
 .badge-success:hover {
     background-color: #356635;
+}
+
+.card {
+    border: 1px solid #ccc !important;
+    border-radius: 3px;
+    padding: 0.05em 16px;
+    height: auto;
+}
+
+.recCard {
+    border: 1px solid #468847
+}
+
+.cardContainer {
+    margin-left: 15%;
+    margin-top: 5%;
+    margin-bottom: 10%;
 }
